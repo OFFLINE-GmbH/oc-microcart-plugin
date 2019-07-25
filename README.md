@@ -23,7 +23,7 @@ It **does not** provide any of these features:
 * Multi currency support
 * Stock management
 * Shipping rules
-* lots of other extended eCommerce features
+* ... and lots of other extended eCommerce features
 
 If you are looking for a full featured eCommerce solution for October CMS
 check out [OFFLINE.Mall](https://github.com/OFFLINE-GmbH/oc-mall-plugin).
