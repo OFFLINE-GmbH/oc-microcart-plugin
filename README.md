@@ -1,5 +1,34 @@
 # oc-microcart-plugin
 
+The `OFFLINE.MicroCart` plugin aims to provide simple shopping cart and payment features.
+It does not provide any kind of product management. 
+
+This plugin is meant for projects where simple items are sold online (Tickets, Coupons, etc).
+You will have to implement the "item part" (like a `Ticket` model) yourself. You can use
+the plugin as cart and payment solution.
+
+
+The `OFFLINE.MicroCart` plugin provides the following features:
+
+* A `Cart` model with a nice API to add and remove `CartItems`
+* A `Cart` component base, that is meant to be extended by you
+* `Stripe` and `PayPal` payment integrations
+* Support to add custom payment gateways
+* Numerous events for you to hook into 
+
+It **does not** provide any of these features:
+
+* Product data management
+* E-Mail notifications 
+* Multi currency support
+* Stock management
+* Shipping rules
+* lots of other extended eCommerce features
+
+If you are looking for a full featured eCommerce solution for October CMS
+check out [OFFLINE.Mall](https://github.com/OFFLINE-GmbH/oc-mall-plugin).
+
+
 ## API
 
 ### Cart
