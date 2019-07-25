@@ -84,8 +84,6 @@ class CartTest extends PluginTestCase
         $lowTax  = Tax::create(['name' => '10%', 'percentage' => 10, 'is_default' => 1]);
         $highTax = Tax::create(['name' => '100%', 'percentage' => 100]);
 
-        $cart = Cart::fromSession();
-
         $payment = PaymentMethod::create([
             'price'            => 0.30,
             'payment_provider' => 'stripe',
@@ -93,6 +91,8 @@ class CartTest extends PluginTestCase
             'name'             => 'Test method',
         ]);
         $payment->taxes()->attach($lowTax);
+
+        $cart = Cart::fromSession();
 
         // -------------------------------------------------------------------
         // Item       Quantity         Price     Subtotal       Tax      Total
