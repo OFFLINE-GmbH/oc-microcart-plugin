@@ -113,6 +113,9 @@ class CartItem extends Model
 
     public function setTaxIdAttribute($value)
     {
+        if ( ! $this->exists) {
+            $this->save();
+        }
         $this->taxes()->attach($value);
         $this->reloadRelations('taxes');
         $this->calculateTotals();
