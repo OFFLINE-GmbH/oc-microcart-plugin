@@ -1,117 +1,232 @@
-<p align="center"> 
-	<img style="max-width: 100%; margin: 2rem auto; display: block;" src="https://user-images.githubusercontent.com/8600029/52163618-c3bf3d80-26e4-11e9-870c-427401a27937.jpeg">
-</p>
+# oc-microcart-plugin
+
+## API
+
+### Cart
+
+#### Get the user's cart
+
+```php
+// This cart will be unique to the current user.
+$cart = Cart::fromSession();
+```
+
+#### Add an item to the cart
+
+```php
+$item           = new CartItem();
+$item->name     = 'An item'; // The only required field
+$item->quantity = 2;
+$item->price    = 20.00;
+
+$cart->add($item);
+```
+
+#### Ensure an item is in the cart
+
+```php
+$item = new CartItem(['name' => 'Shipping fee', 'kind' => CartItem::KIND_SERVICE]);
+
+// A code property is required! A product with the specified
+// code is ensured to be present in the Cart.
+$item->code = 'shipping'; 
+
+// ensure the item is in the cart. If it's not, it will be added.
+$cart->ensure($item);
+// A second call will not add the item again.
+$cart->ensure($item);
+// You can force a new quantity by passing a second parameter.
+$cart->ensure($item, 4);
+```
 
 
-# oc-mall
+#### Remove an item from the cart
 
-> E-commerce solution for October CMS
+```php
+$item = new CartItem(['name' => 'An item']);
 
-[![Build Status](https://travis-ci.org/OFFLINE-GmbH/oc-mall-plugin.svg?branch=develop)](https://travis-ci.org/OFFLINE-GmbH/oc-mall-plugin)
+// You can remove an item by passing in a CartItem object or an id.
+$cart->remove($item);
+$cart->remove($item->id);
+```
 
-`oc-mall` is a fully featured online shop solution for October CMS.
+#### Remove all items with a given code from the cart
 
-* Manage Products and Variants
-* Stock management
-* Checkout via Stripe and PayPal supported out-of-the-box
-* Custom payment providers 
-* Integrated with RainLab.User
-* Multi-currency and multi-language (integrates with RainLab.Translate)
-* Shipping and Tax management
-* Specific prices for different customer groups
-* Unlimited additional price fields (reseller, retail, reduced, etc)
-* Custom order states
-* Flexible e-mail notifications
-* Easily extendable with custom features
-* [Google Tag Manager and Google Merchant Center integrations](https://offline-gmbh.github.io/oc-mall-plugin/digging-deeper/analytics.html)
+```php
+$item = new CartItem(['name' => 'Shipping fee', 'code' => 'shipping', 'kind' => CartItem::KIND_SERVICE]);
 
-#### Documentation
-The documentation of this plugin can be found here:
-[https://offline-gmbh.github.io/oc-mall-plugin/](https://offline-gmbh.github.io/oc-mall-plugin/)
-
-#### Requirements
-
-* PHP7.1+
-* October Build 444+
-* For best performance use MySQL 5.7+ or MariaDB 10.2+
-
-#### Demo
-
-A live demo of the plugin can be found here:
-[https://mall.offline.swiss](https://mall.offline.swiss)
-
-#### Support
-
-For support and development requests please file an issue on GitHub.
-
-## Installation
-
-The easiest way to get you started is by using the command line:
-
-```bash
-php artisan plugin:install rainlab.user
-php artisan plugin:install rainlab.location
-php artisan plugin:install offline.mall
-``` 
-
-Once the plugin is installed take a look at
-[the official documentation](https://offline-gmbh.github.io/oc-mall-plugin/)
-to get everything up and running.
-
-## Benchmarks
-
-Below are some totally unscientific benchmarks created on a lazy Saturday afternoon. 
-These tests were run on a DigitalOcean CPU optimized Droplet with 2 vCPU and 4GB RAM.
-October was run on Ubuntu 18.04, PHP 7.2.10, Apache 2.4.19 and MySQL 5.7.24.
-
-All measurements were done using the [Bedard.Debugbar](https://octobercms.com/plugin/bedard-debugbar) 
-plugin and are the average load time over 10 page loads (I told you they were unscientific!).
- 
-`Index size` defines the size of the `offline_mall_index` table. This table includes de-normalized 
-information about all Products and Variants. An index size of 1000 means there are 1000 
-individual Variants and Products stored. The demo data used was built using the 
- `php artisan mall:seed-demo` command run in an infinite loop.
-
-`Category page load` is the page load time measured when a category page is loaded. 
-All stored products will be filtered, sorted (by sales count) and counted by the currently viewed `category_id`.
-Nine of these products will be displayed and the pagination will be built based on the returned number
-of results.
-
-`Filtered page load` is the page load time measured when two filters are being enabled
- (filter by the color `Red` and the material `Carbon`). In this case all products
-will be filtered by their category, their color and their material. The pagination
-will be built based on the returned number of results.
-
-| Index size | Category page load | Filtered page load |
-| ---------: | -----------------: | -----------------: |
-|      1'000 |             290 ms |             281 ms |
-|      5'000 |             301 ms |             295 ms |
-|     10'000 |             324 ms |             318 ms |
-|     50'000 |             448 ms |             433 ms |
-|    100'000 |             586 ms |             570 ms |
-|    200'000 |             912 ms |             865 ms |
-|    300'000 |            1300 ms |            1240 ms |
-
-Please be aware that these benchmarks are only here to show you how this plugin
-behaves under different loads and the times will vary depending on the
-hardware, configuration and setup of your installation. If you really want to know how well
-the plugin performs install it yourself and give it a go!
+// Removes all items with a given code (reverse of the `ensure` method).
+$cart->removeByCode('shipping');
+```
 
 
-## Contributing
+#### Update an item's quantity
 
-### Documentation
+```php
+$item = new CartItem(['name' => 'An item']);
 
-The raw documentation for this plugin is stored in the docs directory. It is written in markdown and built with 
-[VuePress](https://vuepress.vuejs.org/).
+// You can set the quantity by passing in a CartItem object or an id.
+$cart->setQuantity($item, 4);
+$cart->setQuantity($item->id, 4);
+```
 
-For a live preview of the docs install `vuepress` locally and run `vuepress dev` from the docs directory.
+#### Service fees and discounts
 
-### Bugs and feature requests
+Set the `kind` attribute to either `CartItem::KIND_SERVICE` or `CartItem::KIND_DISCOUNT`
+if the item is a service fee (Shipping, Handling) or a discount. 
+Use the `ensure` method to make sure it's only added once to the Cart.
 
-If you found a bug or want to request a feature please file a GitHub issue.
 
-### Pull requests
+```php
+$item = new CartItem(['name' => 'Shipping fee', 'kind' => CartItem::KIND_SERVICE, 'price' => 10]);
 
-PRs are always welcome! Open them against the `develop` branch.
-If you plan a time consuming contribution please open an issue first and describe what changes you have in mind. 
+// The code is required to use the `ensure` method.
+$item->code = 'shipping'; 
+
+$cart->ensure($item);
+
+
+$item = new CartItem(['name' => 'Discount', 'kind' => CartItem::KIND_DISCOUNT, 'price' => -100]);
+$item->code = 'discount'; 
+
+$cart->ensure($item);
+```
+
+#### Access cart contents
+
+You can access all cart items using the `$cart->items` relation.
+
+You also have access to filtered `list_items`, `service_fees` and `discounts` 
+properties that only contain the respective item types.
+
+```php
+$item     = new CartItem(['name' => 'A product']);
+$shipping = new CartItem(['name' => 'Shipping fee', 'kind' => CartItem::KIND_SERVICE]);
+$discount = new CartItem(['name' => 'Discount',  'kind' => CartItem::KIND_DISCOUNT]);
+
+$cart->addMany($item, $shipping, $discount);
+
+$cart->list_items->first()   === $item;     // true
+$cart->service_fees->first() === $shipping; // true
+$cart->discounts->first()    === $discount; // true
+```  
+
+### CartItem
+
+#### Create an item
+
+```php
+// Short format
+$item = new CartItem(['name' => 'An item']);
+
+// Or long format
+$item = new CartItem();
+$item->name = 'An item';
+$item->description = 'The description to this item';
+$item->price = 20.00; // Includes tax by default.
+$item->quantity = 10;
+$item->meta = [
+    'any' => 'additional',
+    'data' => true,
+];
+// $item->tax_id = 2;           // If not specified the default tax will be used. 
+// $item->tax_free = true;      // Don't add taxes to this item, not even the default tax. 
+// $item->is_before_tax = true; // The specified price does not contain taxes. 
+```
+
+#### Access item information
+
+```php
+$item           = new CartItem(['name' => 'An item']);
+$item->price    = 10.00;
+$item->quantity = 2;
+$item->tax_id   = 1; // 10% tax
+
+$item->price;        // 10.00
+$item->quantity;     // 2
+$item->subtotal;     // 20.00 => price * quantity
+$item->tax_amount;   // 2.00
+$item->total;        // 22.00 => (price * quantity) + tax_amount
+```
+
+
+### Money
+
+There is a `Money` singleton class available to format cents as a string.
+A `microcart_money` Twig helper is registered as well.
+
+```php
+Money::instance()->format(12000); // 120.00 USD
+
+// or in Twig
+{{ 120000 | microcart_money }}   // 120.00 USD
+```
+
+#### Change the default money formatter
+
+You can register your own formatter function by adding the following code
+to your Plugin's `register` method.
+
+```php
+    public function register()
+    {
+        \Event::listen('offline.microcart.moneyformatter', function () {
+            return function ($cents): string {
+                return 'Your custom implementation to format: ' . $cents;
+            };
+        });
+    }
+```
+
+## Events
+
+### Cart
+
+#### `offline.microcart.cart.beforeAdd`
+
+Fired before an item is added to the Cart. It receives the following arguments:
+
+* `$cart`: the `Cart` of the current user 
+* `$item`: the `CartItem` being added 
+
+#### `offline.microcart.cart.afterAdd`
+
+Fired after an item has been added to the Cart. It receives the following arguments:
+
+* `$cart`: the `Cart` of the current user 
+* `$item`: the `CartItem` added 
+
+#### `offline.microcart.cart.beforeRemove`
+
+Fired before an item is removed from the Cart. It receives the following arguments:
+
+* `$cart`: the `Cart` of the current user 
+* `$item`: the `CartItem` being removed 
+
+#### `offline.microcart.cart.afterRemove`
+
+Fired after an item has been removed from the Cart. It receives the following arguments:
+
+* `$cart`: the `Cart` of the current user 
+* `$item`: the `CartItem` removed 
+
+#### `offline.microcart.cart.quantityChanged`
+
+Fired after the quantity of a cart item has changed.
+
+* `$cart`: the `Cart` of the current user 
+* `$item`: the `CartItem` that was updated
+
+### Checkout
+
+#### `offline.microcart.checkout.succeeded`
+
+Fired after a checkout was successful.
+
+* `$result`: a `PaymentResult` instance
+
+#### `offline.microcart.checkout.failed`
+
+Fired after a checkout has failed.
+
+* `$result`: a `PaymentResult` instance  
