@@ -19,7 +19,7 @@ matrix:
         - travis_retry composer install --no-interaction --prefer-source
       before_script:
         - git clone https://github.com/octobercms/october.git
-        - mkdir -p ./october/plugins/offline/mall
+        - mkdir -p ./october/plugins/offline/microcart
         - cd october
         - composer self-update
         - travis_retry composer install --no-interaction --prefer-source
