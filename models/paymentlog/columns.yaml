@@ -1,0 +1,83 @@
+columns:
+    id:
+        label: 'offline.microcart::lang.common.id'
+        type: number
+        sortable: true
+        invisible: true
+    cart_id:
+        label: 'offline.microcart::lang.order.order_number'
+        type: number
+        searchable: true
+        sortable: true
+    failed:
+        label: 'offline.microcart::lang.order.status'
+        type: partial
+        searchable: true
+        sortable: true
+        path: $/offline/microcart/models/paymentlog/_failed.htm
+    total:
+        label: 'offline.microcart::lang.order.total'
+        type: text
+        searchable: true
+        sortable: false
+    order_data:
+        label: 'offline.microcart::lang.order.data'
+        type: text
+        searchable: true
+        invisible: true
+        sortable: true
+    reference:
+        label: 'offline.microcart::lang.common.reference'
+        type: text
+        searchable: true
+        sortable: true
+    payment_method:
+        label: 'offline.microcart::lang.common.payment_method'
+        type: text
+        searchable: true
+        sortable: true
+    payment_provider:
+        label: 'offline.microcart::lang.common.payment_provider'
+        type: text
+        searchable: true
+        sortable: true
+        invisible: true
+    ip:
+        label: IP
+        type: text
+        searchable: true
+        sortable: true
+        invisible: true
+    session_id:
+        label: 'offline.microcart::lang.common.session_id'
+        type: text
+        searchable: true
+        sortable: true
+        invisible: true
+    data:
+        label: 'offline.microcart::lang.common.data'
+        type: text
+        searchable: true
+        invisible: true
+        sortable: true
+    message_raw:
+        label: 'offline.microcart::lang.common.message'
+        type: text
+        searchable: false
+        sortable: false
+    code:
+        label: 'offline.microcart::lang.common.code'
+        type: text
+        searchable: true
+        sortable: true
+    created_at:
+        label: 'offline.microcart::lang.common.created_at'
+        type: datetime
+        searchable: true
+        sortable: true
+    updated_at:
+        label: 'offline.microcart::lang.common.updated_at'
+        type: datetime
+        searchable: true
+        invisible: true
+        sortable: true

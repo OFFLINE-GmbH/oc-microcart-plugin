@@ -1,0 +1,4 @@
+title: PaymentMethods
+modelClass: OFFLINE\MicroCart\Models\PaymentMethod
+toolbar:
+    buttons: reorder_toolbar

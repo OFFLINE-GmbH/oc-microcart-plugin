@@ -1,0 +1,78 @@
+<form id="checkout" method="post" data-request="onCheckout" data-request-validate>
+
+    <h2>Payment method</h2>
+
+    {% for method in __SELF__.paymentMethods %}
+    <div>
+        <label for="method_{{ method.id }}">
+            <input type="radio"
+                   data-request="onChangePaymentMethod"
+                   name="checkout[payment_method_id]"
+                   value="{{ method.id }}"
+                   id="method_{{ method.id }}"
+                   {{ method.id == __SELF__.cart.payment_method_id ? 'checked' }}
+            >
+            {{ method.name }}
+        </label>
+        {% else %}
+            <p>Error: Create a payment method via the backend settings!</p>
+        {% endfor %}
+    </div>
+    <div data-validate-for="payment_method_id"></div>
+
+    <div id="payment-method-data">
+        {% partial __SELF__ ~ '::payment_data' method=__SELF__.cart.payment_method %}
+    </div>
+
+    <h2>Contact information</h2>
+
+    <div class="form-group">
+        <label for="email">E-Mail</label>
+        <input type="email" name="checkout[email]" class="form-control">
+        <div data-validate-for="email"></div>
+    </div>
+
+    {% set fields = {
+        'company' :'Company',
+        'firstname' :'Firstname',
+        'lastname': 'Lastname',
+        'lines': 'Address',
+        'zip': 'ZIP',
+        'city': 'City',
+        'country': 'Country',
+    } %}
+
+    <h2>Shipping address</h2>
+
+    {% for field, label in fields %}
+        {% set id = 'shipping_' ~ field %}
+        <div class="form-group">
+            <label for="{{ id }}">{{ label }}</label>
+            <input type="text" name="checkout[{{ id }}]" class="form-control">
+            <div data-validate-for="{{ id }}"></div>
+        </div>
+    {% endfor %}
+
+    <div class="form-group-checkbox">
+        <label for="billing_differs">
+            <input type="checkbox" id="billing_differs" name="checkout[billing_differs]" value="1"
+                   onclick="document.querySelector('.js-billing').style.display = this.checked ? 'block' : 'none'">
+            Use different billing address
+        </label>
+    </div>
+
+    <div class="js-billing" style="display: none">
+        <h2>Billing address</h2>
+
+        {% for field, label in fields %}
+            {% set id = 'billing_' ~ field %}
+            <div class="form-group">
+                <label for="{{ id }}">{{ label }}</label>
+                <input type="text" name="checkout[{{ id }}]" class="form-control">
+                <div data-validate-for="{{ id }}"></div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <button type="submit">Checkout</button>
+</form>

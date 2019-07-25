@@ -1,0 +1,62 @@
+fields:
+    failed:
+        label: 'offline.microcart::lang.order.status'
+        span: auto
+        path: $/offline/microcart/models/paymentlog/_failed_callout.htm
+        type: partial
+    payment_method:
+        label: 'offline.microcart::lang.common.payment_method'
+        span: auto
+        cssClass: ''
+        type: text
+    reference:
+        label: 'offline.microcart::lang.common.reference'
+        span: auto
+        readonly: 1
+        type: text
+    payment_provider:
+        label: 'offline.microcart::lang.common.payment_provider'
+        span: auto
+        readonly: 1
+        type: text
+    ip:
+        label: IP
+        span: auto
+        readonly: 1
+        type: text
+    session_id:
+        label: 'offline.microcart::lang.common.session_id'
+        span: auto
+        type: text
+        readonly: 1
+tabs:
+    fields:
+        code:
+            label: 'offline.microcart::lang.common.code'
+            span: auto
+            readonly: 1
+            type: text
+            commentAbove: 'offline.microcart::lang.payment_log.message_comment'
+            tab: 'offline.microcart::lang.payment_log.payment_data'
+        message:
+            label: 'offline.microcart::lang.common.message'
+            span: auto
+            readonly: 1
+            type: text
+            commentAbove: 'offline.microcart::lang.payment_log.message_comment'
+            tab: 'offline.microcart::lang.payment_log.payment_data'
+        data:
+            label: 'offline.microcart::lang.common.data'
+            span: auto
+            type: partial
+            path: $/offline/microcart/models/paymentlog/_data.htm
+            commentAbove: 'offline.microcart::lang.payment_log.data_comment'
+            tab: 'offline.microcart::lang.payment_log.payment_data'
+        cart_data:
+            label: 'offline.microcart::lang.order.data'
+            span: auto
+            cssClass: ''
+            path: $/offline/microcart/models/paymentlog/_cart_data.htm
+            type: partial
+            commentAbove: 'offline.microcart::lang.payment_log.order_data_comment'
+            tab: 'offline.microcart::lang.payment_log.payment_data'

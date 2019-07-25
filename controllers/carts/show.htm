@@ -1,0 +1,107 @@
+<div class="layout responsive-sidebar">
+    <div class="layout-cell">
+
+        <div class="layout">
+            <div class="control-breadcrumb breadcrumb-flush">
+                <ul>
+                    <li>
+                        <a href="<?= $indexUrl ?>">
+                            <?= e(trans('offline.microcart::lang.common.orders')) ?>
+                        </a>
+                    </li>
+                    <li><?= e($cart->id) ?></li>
+                </ul>
+            </div>
+
+            <div class="layout-row">
+                <div class="padded-container layout">
+                    <div class="layout">
+                        <div class="layout-row">
+                            <div class="scoreboard">
+                                <div data-control="toolbar">
+                                    <?= $this->makePartial('detail_scoreboard') ?>
+                                </div>
+                            </div>
+                            <div class="control-toolbar">
+                                <div class="toolbar-item toolbar-primary">
+                                    <div data-control="toolbar">
+                                        <?= $this->makePartial('toolbar') ?>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="control-tabs primary-tabs" data-control="tab">
+                                <ul class="nav nav-tabs">
+                                    <li class="active">
+                                        <a href="#order">
+                                            <?= e(trans('offline.microcart::lang.common.products')) ?>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#payments">
+                                            <?= e(trans('offline.microcart::lang.common.payments')) ?>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane active">
+                                        <div style="margin-left: -20px; margin-right: -20px; margin-top: -21px;">
+                                            <div class="control-list">
+                                                <?= $this->makePartial('items') ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane">
+                                        <div class="form-group">
+                                            <?= $this->relationRender('payment_logs', ['readOnly' => true]); ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-buttons">
+                            <div class="loading-indicator-container">
+                                <button
+                                        type="button"
+                                        class="oc-icon-trash-o btn-icon danger pull-right"
+                                        data-request="onDelete"
+                                        data-load-indicator="<?= e(trans('offline.microcart::lang.order.deleting')) ?>"
+                                        data-request-confirm="<?= e(trans('offline.microcart::lang.order.delete_confirm')) ?>">
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <div class="layout-cell w-300 form-sidebar control-scrollpanel">
+        <div class="layout-relative">
+            <div class="layout-absolute">
+                <div class="sidebar-content">
+                    <?= $this->makePartial('address', [
+                    'data' => $cart,
+                    'key' => 'shipping',
+                    'heading' => e(trans('offline.microcart::lang.order.shipping_address'))
+                    ]) ?>
+
+                    <?php if( $cart->billing_differs): ?>
+                    <?= $this->makePartial('address', [
+                    'data' => $cart,
+                    'key' => 'billing',
+                    'heading' => e(trans('offline.microcart::lang.order.billing_address'))
+                    ]) ?>
+                    <?php else: ?>
+                    <div class="sidebar-box sidebar-box--with-icon">
+                        <i class="icon icon-info-circle"></i>
+                        <?= e(trans('offline.microcart::lang.order.shipping_address_is_same_as_billing')); ?>
+                    </div>
+                    <?php endif; ?>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

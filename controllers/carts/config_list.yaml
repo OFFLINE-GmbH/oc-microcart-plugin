@@ -1,0 +1,12 @@
+list: $/offline/microcart/models/cart/columns.yaml
+modelClass: OFFLINE\MicroCart\Models\Cart
+title: Carts
+noRecordsMessage: 'backend::lang.list.no_records'
+showSetup: true
+showCheckboxes: true
+recordsPerPage: 20
+recordUrl: offline/microcart/carts/show/:id
+toolbar:
+    buttons: list_toolbar
+    search:
+        prompt: 'backend::lang.list.search_prompt'

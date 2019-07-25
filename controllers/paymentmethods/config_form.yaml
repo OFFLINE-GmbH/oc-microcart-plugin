@@ -1,0 +1,10 @@
+name: PaymentMethods
+form: $/offline/microcart/models/paymentmethod/fields.yaml
+modelClass: OFFLINE\MicroCart\Models\PaymentMethod
+defaultRedirect: offline/microcart/paymentmethods
+create:
+    redirect: 'offline/microcart/paymentmethods/update/:id'
+    redirectClose: offline/microcart/paymentmethods
+update:
+    redirect: offline/microcart/paymentmethods
+    redirectClose: offline/microcart/paymentmethods

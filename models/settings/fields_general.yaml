@@ -1,0 +1,6 @@
+fields:
+    default_currency:
+        type: text
+        label: 'offline.microcart::lang.common.default_currency'
+        span: auto
+        placeholder: USD

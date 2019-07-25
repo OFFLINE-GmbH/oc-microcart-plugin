@@ -1,0 +1,17 @@
+columns:
+    is_default:
+        label: 'offline.microcart::lang.common.is_default'
+        description: 'offline.microcart::lang.common.is_default_description'
+        type: switch
+        searchable: true
+        sortable: true
+    name:
+        label: 'offline.microcart::lang.common.name'
+        type: text
+        searchable: true
+        sortable: true
+    percentage:
+        label: 'offline.microcart::lang.tax.percentage'
+        type: text
+        searchable: true
+        sortable: true

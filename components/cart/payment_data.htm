@@ -1,0 +1,6 @@
+{% if method.payment_provider %}
+    {% set path = __SELF__ ~ '::' ~ method.payment_provider %}
+    {% if partial(path) %}
+        {% partial path method=method %}
+    {% endif %}
+{% endif %}

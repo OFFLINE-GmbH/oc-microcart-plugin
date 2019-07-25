@@ -1,0 +1,39 @@
+matrix:
+  allow_failures:
+    - php: nightly
+
+  include:
+    - language: php
+      services:
+        - mysql
+      php:
+        - 7.1
+        - 7.2
+        - 7.3
+        - nightly
+      sudo: false
+      before_install:
+        - mysql -e 'CREATE DATABASE IF NOT EXISTS october;'
+      install:
+        - composer self-update
+        - travis_retry composer install --no-interaction --prefer-source
+      before_script:
+        - git clone https://github.com/octobercms/october.git
+        - mkdir -p ./october/plugins/offline/mall
+        - cd october
+        - composer self-update
+        - travis_retry composer install --no-interaction --prefer-source
+        - php artisan october:env
+        - php artisan key:generate
+        - echo "DB_HOST=127.0.0.1" > .env
+        - echo "DB_DATABASE=october" >> .env
+        - echo "DB_USERNAME=root" >> .env
+        - echo "DB_PASSWORD=" >> .env
+        - php artisan october:up -v
+        - cd ..
+        - mv !(october) october/plugins/offline/microcart
+        - cd october
+        - php artisan october:up -v
+        - cd plugins/offline/microcart
+        - composer install
+      script: ../../../vendor/bin/phpunit

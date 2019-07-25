@@ -1,0 +1,118 @@
+columns:
+    session_id:
+        label: session
+        type: text
+        invisible: true
+    email:
+        label: 'offline.microcart::lang.common.email'
+        type: text
+        searchable: true
+        sortable: true
+    shipping_company:
+        label: shipping_company
+        type: text
+        searchable: true
+        invisible: true
+    shipping_firstname:
+        label: shipping_firstname
+        type: text
+        searchable: true
+        invisible: true
+    shipping_lastname:
+        label: shipping_lastname
+        type: text
+        searchable: true
+        invisible: true
+    shipping_lines:
+        label: shipping_lines
+        type: text
+        searchable: true
+        invisible: true
+    shipping_zip:
+        label: shipping_zip
+        type: text
+        searchable: true
+        invisible: true
+    shipping_city:
+        label: shipping_city
+        type: text
+        searchable: true
+        invisible: true
+    shipping_country:
+        label: shipping_country
+        type: text
+        searchable: true
+        invisible: true
+    billing_differs:
+        label: billing_differs
+        type: text
+        searchable: true
+        invisible: true
+    billing_company:
+        label: billing_company
+        type: text
+        searchable: true
+        invisible: true
+    billing_firstname:
+        label: billing_firstname
+        type: text
+        searchable: true
+        invisible: true
+    billing_lastname:
+        label: billing_lastname
+        type: text
+        searchable: true
+        invisible: true
+    billing_lines:
+        label: billing_lines
+        type: text
+        searchable: true
+        invisible: true
+    billing_zip:
+        label: billing_zip
+        type: text
+        searchable: true
+        invisible: true
+    billing_city:
+        label: billing_city
+        type: text
+        searchable: true
+        invisible: true
+    billing_country:
+        label: billing_country
+        type: text
+        searchable: true
+        invisible: true
+    payment_id:
+        label: payment_id
+        type: number
+        searchable: true
+        invisible: true
+    payment_method_id:
+        label: payment_method_id
+        type: number
+        searchable: true
+        invisible: true
+    payment_state:
+        label: 'offline.mall::lang.order.payment_status'
+        type: partial
+        path: $/offline/microcart/models/cart/_payment_state.htm
+        sortable: true
+        searchable: false
+    currency:
+        label: currency
+        type: text
+        searchable: true
+        invisible: true
+    created_at:
+        label: 'offline.microcart::lang.common.created_at'
+        type: datetime
+        searchable: true
+        invisible: false
+        sortable: true
+    updated_at:
+        label: 'offline.microcart::lang.common.updated_at'
+        type: datetime
+        searchable: true
+        invisible: true
+        sortable: true

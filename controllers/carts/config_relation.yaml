@@ -1,0 +1,8 @@
+payment_logs:
+    label: 'offline.microcart::lang.common.payment'
+    view:
+        list: $/offline/microcart/models/paymentlog/columns.yaml
+        toolbarButtons: delete
+    manage:
+        form: $/offline/microcart/models/paymentlog/fields.yaml
+        recordsPerPage: 10

@@ -1,0 +1,11 @@
+plugin:
+    name: 'offline.microcart::lang.plugin.name'
+    description: 'offline.microcart::lang.plugin.description'
+    author: OFFLINE
+    icon: oc-icon-shopping-cart
+    homepage: 'https://github.com/OFFLINE-GmbH/oc-microcart-plugin'
+navigation:
+    main-menu-item:
+        label: 'offline.microcart::lang.common.orders'
+        url: offline/microcart/carts
+        iconSvg: plugins/offline/microcart/assets/icon.svg

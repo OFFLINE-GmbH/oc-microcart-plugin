@@ -1,0 +1,6 @@
+1.0.1:
+    - 'Initial release'
+    - create_offline_microcart_carts.php
+    - create_offline_microcart_items.php
+    - create_offline_microcart_taxes.php
+    - create_offline_microcart_payment_methods.php

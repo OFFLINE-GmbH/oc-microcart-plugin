@@ -1,0 +1,69 @@
+fields:
+    name:
+        label: 'offline.microcart::lang.common.name'
+        oc.commentPosition: ''
+        span: auto
+        type: text
+    is_default:
+        label: 'offline.microcart::lang.common.is_default'
+        comment: 'offline.microcart::lang.common.is_default_description'
+        type: switch
+        span: auto
+    code:
+        label: 'offline.microcart::lang.common.code'
+        comment: 'offline.microcart::lang.common.code_comment'
+        span: auto
+        type: text
+        placeholder: 'offline.microcart::lang.common.code'
+        preset:
+            field: name
+            type: slug
+    payment_provider:
+        label: 'offline.microcart::lang.common.payment_provider'
+        oc.commentPosition: ''
+        span: auto
+        type: dropdown
+tabs:
+    fields:
+        description:
+            label: 'offline.microcart::lang.product.description'
+            size: large
+            span: auto
+            type: richeditor
+            tab: 'offline.microcart::lang.product.description'
+        label:
+            label: 'offline.microcart::lang.payment_method.label'
+            span: left
+            type: text
+            comment: 'offline.microcart::lang.payment_method.label_comment'
+            tab: 'offline.microcart::lang.common.fees'
+        taxes:
+            span: right
+            path: taxes
+            type: partial
+            tab: 'offline.microcart::lang.common.fees'
+        price:
+            label: 'offline.microcart::lang.payment_method.price'
+            span: left
+            type: text
+            comment: 'offline.microcart::lang.payment_method.price_comment'
+            tab: 'offline.microcart::lang.common.fees'
+        percentage:
+            label: 'offline.microcart::lang.payment_method.fee_percentage'
+            span: left
+            type: text
+            comment: 'offline.microcart::lang.payment_method.fee_percentage_comment'
+            tab: 'offline.microcart::lang.common.fees'
+        logo:
+            label: 'offline.microcart::lang.common.logo'
+            oc.commentPosition: ''
+            mode: image
+            imageWidth: '200'
+            imageHeight: '200'
+            useCaption: 0
+            thumbOptions:
+                mode: crop
+                extension: auto
+            span: auto
+            type: fileupload
+            tab: 'offline.microcart::lang.product.description'

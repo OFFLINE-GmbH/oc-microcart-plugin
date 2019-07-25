@@ -1,0 +1,19 @@
+<button data-request="onAdd">
+    Add a product
+</button>
+
+<div id="cart">
+    {% partial __SELF__ ~ '::table' cart=__SELF__.cart %}
+</div>
+
+{% partial __SELF__ ~ '::checkout' %}
+
+{% put scripts %}
+    <script>
+        $(function() {
+            $(window).on('oc.beforeRequest', function(e, context) {
+                console.log('prevent submit')
+            })
+        })
+    </script>
+{% endput %}

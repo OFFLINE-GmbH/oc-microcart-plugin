@@ -1,0 +1,16 @@
+fields:
+    is_default:
+        label: 'offline.microcart::lang.common.is_default'
+        comment: 'offline.microcart::lang.common.is_default_description'
+        type: switch
+        span: full
+    name:
+        label: 'offline.microcart::lang.common.name'
+        oc.commentPosition: ''
+        span: left
+        type: text
+    percentage:
+        label: 'offline.microcart::lang.tax.percentage'
+        oc.commentPosition: ''
+        span: right
+        type: number

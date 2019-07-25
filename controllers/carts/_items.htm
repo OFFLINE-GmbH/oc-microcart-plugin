@@ -1,0 +1,115 @@
+<table class="table data">
+    <thead>
+    <tr>
+        <th>
+            <span>
+                <?= e(trans('offline.microcart::lang.product.name')) ?>
+            </span>
+        </th>
+        <th class="text-right">
+            <span>
+                <?= e(trans('offline.microcart::lang.order.quantity')) ?>
+            </span>
+        </th>
+        <th class="text-right">
+            <span>
+                <?= e(trans('offline.microcart::lang.product.price')) ?>
+            </span>
+        </th>
+        <th class="text-right">
+            <span>
+                <?= e(trans('offline.microcart::lang.order.total')) ?>
+            </span>
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php foreach ($cart->list_items as $item): ?>
+    <tr>
+        <td>
+            <?= e($item->name) ?><br/>
+        </td>
+        <td class="text-right"><?= e($item->quantity) ?></td>
+        <td class="text-right"><?= e($money->format($item->price)) ?></td>
+        <td class="text-right"><?= e($money->format($item->total)) ?></td>
+    </tr>
+    <?php endforeach; ?>
+    <?php foreach ($cart->service_fees as $item): ?>
+    <tr>
+        <td>
+            <?= e($item->name) ?><br/>
+        </td>
+        <td class="text-right"><?= e($item->quantity) ?></td>
+        <td class="text-right"><?= e($money->format($item->price)) ?></td>
+        <td class="text-right"><?= e($money->format($item->total)) ?></td>
+    </tr>
+    <?php endforeach; ?>
+    <?php foreach ($cart->discounts as $item): ?>
+    <tr>
+        <td>
+            <?= e($item->name) ?><br/>
+        </td>
+        <td class="text-right"><?= e($item->quantity) ?></td>
+        <td class="text-right"><?= e($money->format($item->price)) ?></td>
+        <td class="text-right"><?= e($money->format($item->total)) ?></td>
+    </tr>
+    <?php endforeach; ?>
+
+
+    <tr class="orderfooter separator separator-bottom">
+        <td colspan="3">
+            <span>
+                <?= e(trans('offline.microcart::lang.order.subtotal')) ?>
+            </span>
+        </td>
+        <td class="text-right">
+            <span>
+                <?= e($money->format($cart->totals->cartPostTaxes)) ?>
+            </span>
+        </td>
+    </tr>
+
+
+    <?php if ($cart->payment_method_id): ?>
+    <tr class="orderfooter separator">
+        <td colspan="3">
+            <span>
+                <?= e(trans('offline.microcart::lang.common.payment')) ?>:
+                <?= e($cart->payment_method->name) ?>
+            </span>
+        </td>
+        <td class="text-right">
+            <span>
+                <?= e($money->format($cart->totals->paymentPostTaxes)) ?>
+            </span>
+        </td>
+    </tr>
+    <?php endif; ?>
+    <tr class="orderfooter-bottomline">
+        <td colspan="3">
+            <span>
+                <?= e(trans('offline.microcart::lang.order.grand_total')) ?>
+            </span>
+        </td>
+        <td class="text-right"><span><?= e($money->format($cart->totals->grandPostTaxes)) ?></span></td>
+    </tr>
+
+
+    <?php if ($cart['taxes']): ?>
+    <?php foreach ($cart['taxes'] as $tax): ?>
+    <tr class="orderfooter orderfooter-taxes separator">
+        <td colspan="3">
+            <span>
+                <?= e($tax['tax']['name']) ?> (<?= e($tax['tax']['percentage']) ?> %)
+            </span>
+        </td>
+        <td class="text-right">
+            <span>
+                <?= e($tax['total_formatted']); ?>
+            </span>
+        </td>
+    </tr>
+    <?php endforeach; ?>
+    <?php endif; ?>
+    </tbody>
+</table>
