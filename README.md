@@ -1,12 +1,10 @@
 # oc-microcart-plugin
 
-The `OFFLINE.MicroCart` plugin aims to provide simple shopping cart and payment features.
-It does not provide any kind of product management. 
+> The `OFFLINE.MicroCart` plugin aims to provide simple shopping cart and payment features.
 
 This plugin is meant for projects where simple items are sold online (Tickets, Coupons, etc).
 You will have to implement the "item part" (like a `Ticket` model) yourself. You can use
 the plugin as cart and payment solution.
-
 
 The `OFFLINE.MicroCart` plugin provides the following features:
 
