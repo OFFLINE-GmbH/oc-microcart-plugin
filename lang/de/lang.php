@@ -3,8 +3,8 @@
         'name'        => 'MicroCart',
         'description' => 'MicroCart ist ein winziger Warenkorb für October CMS.',
     ],
-    'titles' => [
-        'orders'               => [
+    'titles'                   => [
+        'orders' => [
             'show'   => 'Bestellungsdetails',
             'export' => 'Bestellungen exportieren',
         ],
@@ -14,6 +14,7 @@
         'payment'                => 'Zahlung',
         'payment_methods'        => 'Zahlungsmethoden',
         'payment_method'         => 'Zahlungsmethode',
+        'card_info'              => 'Karteninformationen',
         'message'                => 'Nachricht',
         'name'                   => 'Name',
         'taxes'                  => 'Steuern',
@@ -31,6 +32,7 @@
         'payments'               => 'Zahlungen',
         'orders'                 => 'Bestellungen',
         'reference'              => 'Referenz',
+        'please_wait'            => 'Bitte warten...',
     ],
     'order'                    => [
         'order_number'                        => '# Bestl.',

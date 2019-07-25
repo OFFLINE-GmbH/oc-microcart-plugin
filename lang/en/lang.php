@@ -3,8 +3,8 @@
         'name'        => 'MicroCart',
         'description' => 'MicroCart is a minimal shopping cart for October CMS.',
     ],
-    'titles' => [
-        'orders'               => [
+    'titles'                   => [
+        'orders' => [
             'show'   => 'Order details',
             'export' => 'Export orders',
         ],
@@ -30,7 +30,9 @@
         'products'               => 'Products',
         'payments'               => 'Payments',
         'orders'                 => 'Orders',
+        'card_info'              => 'Card information',
         'reference'              => 'Reference',
+        'please_wait'            => 'Please wait...',
     ],
     'order'                    => [
         'order_number'                        => '# Order',
