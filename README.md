@@ -6,6 +6,8 @@ This plugin is meant for projects where simple items are sold online (Tickets, C
 You will have to implement the "item part" (like a `Ticket` model) yourself. You can use
 the plugin as cart and payment solution.
 
+## Features
+
 The `OFFLINE.MicroCart` plugin provides the following features:
 
 * A `Cart` model with a nice API to add and remove `CartItems`
