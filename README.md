@@ -52,7 +52,7 @@ following snippet in your own `Plugin.php` to use the default orders overview.
         return [
             'main-menu-item' => [
                 'label'        => 'Vouchers', // Your label
-                'url'          => Backend::url('offline/microcart/carts'),
+                'url'          => \Backend::url('offline/microcart/carts'),
                 'iconSvg'      => 'plugins/offline/microcart/assets/icon.svg',
             ],
         ];

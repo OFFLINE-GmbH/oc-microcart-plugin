@@ -92,14 +92,14 @@ class Stripe extends PaymentProvider
     {
         return [
             'stripe_api_key'         => [
-                'label'   => 'offline.mall::lang.payment_gateway_settings.stripe.api_key',
-                'comment' => 'offline.mall::lang.payment_gateway_settings.stripe.api_key_comment',
+                'label'   => 'offline.microcart::lang.payment_gateway_settings.stripe.api_key',
+                'comment' => 'offline.microcart::lang.payment_gateway_settings.stripe.api_key_comment',
                 'span'    => 'left',
                 'type'    => 'text',
             ],
             'stripe_publishable_key' => [
-                'label'   => 'offline.mall::lang.payment_gateway_settings.stripe.publishable_key',
-                'comment' => 'offline.mall::lang.payment_gateway_settings.stripe.publishable_key_comment',
+                'label'   => 'offline.microcart::lang.payment_gateway_settings.stripe.publishable_key',
+                'comment' => 'offline.microcart::lang.payment_gateway_settings.stripe.publishable_key_comment',
                 'span'    => 'left',
                 'type'    => 'text',
             ],

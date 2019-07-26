@@ -9,11 +9,11 @@
             'export' => 'Bestellungen exportieren',
         ],
     ],
-    'components' => [
+    'components'               => [
         'cart' => [
-            'name' => 'Warenkorb',
+            'name'        => 'Warenkorb',
             'description' => 'Listet alle Produkte im Warenkorb auf',
-        ]
+        ],
     ],
     'common'                   => [
         'email'                  => 'E-Mail',
@@ -39,6 +39,8 @@
         'orders'                 => 'Bestellungen',
         'reference'              => 'Referenz',
         'please_wait'            => 'Bitte warten...',
+        'failed'                 => 'Fehlgeschlagen',
+        'successful'             => 'Erfolgreich',
     ],
     'order'                    => [
         'order_number'                        => '# Bestl.',

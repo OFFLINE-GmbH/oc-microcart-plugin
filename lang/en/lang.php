@@ -9,11 +9,11 @@
             'export' => 'Export orders',
         ],
     ],
-    'components' => [
+    'components'               => [
         'cart' => [
-            'name' => 'Cart',
+            'name'        => 'Cart',
             'description' => 'Displays all items in the cart',
-        ]
+        ],
     ],
     'common'                   => [
         'email'                  => 'E-Mail',
@@ -39,6 +39,8 @@
         'card_info'              => 'Card information',
         'reference'              => 'Reference',
         'please_wait'            => 'Please wait...',
+        'failed'                 => 'Failed',
+        'successful'             => 'Successful',
     ],
     'order'                    => [
         'order_number'                        => '# Order',

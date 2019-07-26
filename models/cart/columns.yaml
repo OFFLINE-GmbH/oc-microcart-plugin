@@ -94,7 +94,7 @@ columns:
         searchable: true
         invisible: true
     payment_state:
-        label: 'offline.mall::lang.order.payment_status'
+        label: 'offline.microcart::lang.order.payment_status'
         type: partial
         path: $/offline/microcart/models/cart/_payment_state.htm
         sortable: true
