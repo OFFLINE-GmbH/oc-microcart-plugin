@@ -100,6 +100,33 @@ and `getValidationMessages` methods on the base `Cart` class.
 
 Also, take a look at [the markup provided by the Cart component](./components/cart) to get you started.
 
+#### Updating the cart partials
+
+You can `return $this->refreshCart();` from your methods to refresh the cart display. 
+
+### Custom payment providers
+
+To register a custom `PaymentProvider` create a class that extends MicroCart's PaymentProvider class:
+
+```php
+<?php
+
+namespace YourVendor\YourPlugin\Classes;
+
+use OFFLINE\MicroCart\Classes\Payments\PaymentProvider;
+
+class SaferPay extends PaymentProvider
+{
+    // Implement all abstract methods.
+}
+```
+
+In your `Plugin.php` register this custom provider by using the following code.
+
+```php
+
+```  
+
 ### Link you model to cart items
 
 The easiest way to link a model to a `CartItem` is to add a simple `belongsTo` relationship.

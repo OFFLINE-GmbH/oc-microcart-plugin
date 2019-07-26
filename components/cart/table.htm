@@ -65,7 +65,7 @@
     {% if cart.payment_method_id %}
         <tr>
             <td></td>
-            <td colspan="3">{{ cart.payment_method.label }}</td>
+            <td colspan="3">{{ cart.payment_method.label | default(cart.payment_method.name) }}</td>
             <td class="text-right">{{ cart.totals.paymentPostTaxes | microcart_money }}</td>
         </tr>
     {% endif %}

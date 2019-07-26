@@ -12,7 +12,7 @@ use System\Classes\PluginBase;
 
 class Plugin extends PluginBase
 {
-    public function boot()
+    public function register()
     {
         $this->app->singleton(PaymentGateway::class, function () {
             $gateway = new DefaultPaymentGateway();
@@ -22,7 +22,10 @@ class Plugin extends PluginBase
 
             return $gateway;
         });
+    }
 
+    public function boot()
+    {
         $moneyFns = array_filter(\Event::fire('offline.microcart.moneyformatter'), 'is_callable');
         if (count($moneyFns)) {
             Money::instance()->setFormatter(array_first($moneyFns));

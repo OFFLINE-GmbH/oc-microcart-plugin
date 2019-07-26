@@ -16,7 +16,7 @@ class Cart extends Model
     public $rules = []; // handled in Cart component, extend as you need.
     public $guarded = [];
     public $hasMany = [
-        'items'       => [CartItem::class, 'order' => ['kind', 'sort_order']],
+        'items'        => [CartItem::class, 'order' => ['kind', 'sort_order']],
         'payment_logs' => [PaymentLog::class, 'order' => ['id desc']],
     ];
     public $belongsTo = [
@@ -175,8 +175,9 @@ class Cart extends Model
 
         if ($existing = $this->items->where('code', $item->code)->first()) {
 
-            $existing->fill(array_except($item->toArray(), 'quantity'));
-
+            $existing->fill(array_except($item->toArray(), 'quantity', 'price'));
+            $existing->price = $item->price / 100;
+            
             // If a $quantity was specified, enforce it for this item. This is done separately
             // to trigger the respective events.
             if ($quantity !== null) {
