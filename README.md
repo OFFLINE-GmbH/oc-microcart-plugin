@@ -81,6 +81,18 @@ use OFFLINE\MicroCart\Models\CartItem;
 
 class Cart extends \OFFLINE\MicroCart\Components\Cart
 {        
+
+    public function onRun()
+    {
+        // An off-site payment has been completed. Important, this code
+        // needs to be present if you are using PayPal. 
+        if ($type = request()->input('return')) {
+            return (new PaymentRedirector($this->page->page->fileName))->handleOffSiteReturn($type);
+        }
+
+        // Do something.
+    }
+
     public function onAdd()
     {
         $item           = new CartItem();
@@ -115,7 +127,7 @@ namespace YourVendor\YourPlugin\Classes;
 
 use OFFLINE\MicroCart\Classes\Payments\PaymentProvider;
 
-class SaferPay extends PaymentProvider
+class YourCustomProvider extends PaymentProvider
 {
     // Implement all abstract methods.
 }
@@ -124,7 +136,15 @@ class SaferPay extends PaymentProvider
 In your `Plugin.php` register this custom provider by using the following code.
 
 ```php
+use OFFLINE\MicroCart\Classes\Payments\PaymentGateway;
 
+class Plugin extends PluginBase
+{
+    public function boot()
+    {
+        app(PaymentGateway::class)->registerProvider(new YourCustomProvider());
+    }
+}
 ```  
 
 ### Link you model to cart items

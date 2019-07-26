@@ -16,15 +16,6 @@ use OFFLINE\MicroCart\Models\PaymentMethod;
 interface PaymentGateway
 {
     /**
-     * Register a new PaymentProvider on this gateway.
-     *
-     * @param PaymentProvider $provider
-     *
-     * @return PaymentProvider
-     */
-    public function registerProvider(PaymentProvider $provider): PaymentProvider;
-
-    /**
      * Initialize the PaymentGateway.
      *
      * @param PaymentMethod $paymentMethod
@@ -42,15 +33,6 @@ interface PaymentGateway
      * @return PaymentResult
      */
     public function process(Cart $cart): PaymentResult;
-
-    /**
-     * Find a PaymentProvider by its ID.
-     *
-     * @param string $identifier
-     *
-     * @return PaymentProvider
-     */
-    public function getProviderById(string $identifier): PaymentProvider;
 
     /**
      * Get an array of all available providers.

@@ -29,28 +29,6 @@ class DefaultPaymentGateway implements PaymentGateway
     /**
      * {@inheritdoc}
      */
-    public function registerProvider(PaymentProvider $provider): PaymentProvider
-    {
-        $this->providers[$provider->identifier()] = $provider;
-
-        return $provider;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getProviderById(string $identifier): PaymentProvider
-    {
-        if ( ! isset($this->providers[$identifier])) {
-            throw new \InvalidArgumentException(sprintf('Payment provider %s is not registered.', $identifier));
-        }
-
-        return $this->providers[$identifier];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function init(PaymentMethod $paymentMethod, array $data)
     {
         $this->provider = $this->getProviderForMethod($paymentMethod);
@@ -67,6 +45,8 @@ class DefaultPaymentGateway implements PaymentGateway
             throw new \LogicException('Missing data for payment. Make sure to call init() before process()');
         }
 
+        $this->provider->init();
+
         Session::put('microCart.payment.id', str_random(8));
 
         $this->provider->setCart($cart);
@@ -80,7 +60,7 @@ class DefaultPaymentGateway implements PaymentGateway
      */
     public function getProviders(): array
     {
-        return $this->providers;
+        return ProviderManager::instance()->all();
     }
 
     /**
@@ -100,8 +80,9 @@ class DefaultPaymentGateway implements PaymentGateway
      */
     protected function getProviderForMethod(PaymentMethod $method): PaymentProvider
     {
-        if (isset($this->providers[$method->payment_provider])) {
-            return new $this->providers[$method->payment_provider];
+        $providers = ProviderManager::instance()->all();
+        if (isset($providers[$method->payment_provider])) {
+            return new $providers[$method->payment_provider];
         }
 
         throw new \LogicException(

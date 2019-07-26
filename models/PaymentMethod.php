@@ -4,7 +4,7 @@ use Model;
 use October\Rain\Database\Traits\Sluggable;
 use October\Rain\Database\Traits\Sortable;
 use October\Rain\Database\Traits\Validation;
-use OFFLINE\MicroCart\Classes\Payments\PaymentGateway;
+use OFFLINE\MicroCart\Classes\Payments\ProviderManager;
 use System\Models\File;
 
 /**
@@ -69,13 +69,10 @@ class PaymentMethod extends Model
 
     public function getPaymentProviderOptions(): array
     {
-        /** @var PaymentGateway $gateway */
-        $gateway = app(PaymentGateway::class);
-
         $options = [];
-        foreach ($gateway->getProviders() as $id => $class) {
-            $method       = new $class;
-            $options[$id] = $method->name();
+        foreach (ProviderManager::instance()->all() as $class) {
+            $method                         = new $class;
+            $options[$method->identifier()] = $method->name();
         }
 
         return $options;
@@ -88,9 +85,7 @@ class PaymentMethod extends Model
 
     public function getSettingsAttribute()
     {
-        /** @var PaymentGateway $gateway */
-        $gateway  = app(PaymentGateway::class);
-        $provider = $gateway->getProviderById($this->payment_provider);
+        $provider = ProviderManager::instance()->all()->get($this->payment_provider);
 
         return $provider->getSettings();
     }

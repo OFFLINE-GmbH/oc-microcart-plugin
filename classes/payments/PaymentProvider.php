@@ -85,6 +85,14 @@ abstract class PaymentProvider
     }
 
     /**
+     * Do your custom initialization in here.
+     */
+    public function init()
+    {
+
+    }
+
+    /**
      * Fields returned from this method are stored encrypted.
      *
      * Use this to store API tokens and other secret data
@@ -171,6 +179,21 @@ abstract class PaymentProvider
     }
 
     /**
+     * Fail URL passed to external payment services.
+     *
+     * The user will be redirected back to this URL if an external error occurs.
+     *
+     * @return string
+     */
+    public function failUrl(): string
+    {
+        return Request::url() . '?' . http_build_query([
+                'return'                  => 'fail',
+                'oc-microcart-payment-id' => $this->getPaymentId(),
+            ]);
+    }
+
+    /**
      * Cancel URL passed to external payment services.
      *
      * The user will be redirected back to this URL if she cancels
@@ -191,7 +214,7 @@ abstract class PaymentProvider
      *
      * @return string
      */
-    private function getPaymentId()
+    public function getPaymentId()
     {
         return Session::get('microCart.payment.id');
     }

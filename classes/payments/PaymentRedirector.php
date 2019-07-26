@@ -119,6 +119,8 @@ class PaymentRedirector
 
             $result = new PaymentResult($paymentProvider, $paymentProvider->getCartFromSession());
 
+            $paymentProvider->init();
+            
             return $this->handlePaymentResult($paymentProvider->complete($result));
         }
 

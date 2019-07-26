@@ -15,13 +15,17 @@ class Plugin extends PluginBase
     public function register()
     {
         $this->app->singleton(PaymentGateway::class, function () {
-            $gateway = new DefaultPaymentGateway();
-            $gateway->registerProvider(new Offline());
-            $gateway->registerProvider(new PayPalRest());
-            $gateway->registerProvider(new Stripe());
-
-            return $gateway;
+            return new DefaultPaymentGateway();
         });
+    }
+
+    public function registerPaymentProviders()
+    {
+        return [
+            new Offline(),
+            new PayPalRest(),
+            new Stripe(),
+        ];
     }
 
     public function boot()

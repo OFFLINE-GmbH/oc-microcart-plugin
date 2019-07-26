@@ -16,6 +16,7 @@
         ],
     ],
     'common'                   => [
+        'data'                   => 'Daten',
         'email'                  => 'E-Mail',
         'payment'                => 'Zahlung',
         'payment_methods'        => 'Zahlungsmethoden',
@@ -41,6 +42,7 @@
         'please_wait'            => 'Bitte warten...',
         'failed'                 => 'Fehlgeschlagen',
         'successful'             => 'Erfolgreich',
+        'session_id'             => 'Session-ID',
     ],
     'order'                    => [
         'order_number'                        => '# Bestl.',
@@ -160,5 +162,13 @@
     ],
     'payment_method_settings'  => [
         'description' => 'Zahlungsmethoden verwalten',
+    ],
+    'payment_log'              => [
+        'payment_data'       => 'Zahlungsdaten',
+        'data_comment'       => 'Diese Daten wurden vom Zahlungsanbieter zurückgegeben',
+        'order_data_comment' => 'Diese Bestellungsdaten gehören zu der Zahlung',
+        'message_comment'    => 'Diese Nachricht wurde vom Zahlungsanbieter zurückgegeben',
+        'code_comment'       => 'Dieser Code wurde vom Zahlungsanbieter zurückgegeben',
+        'failed_only'        => 'Nur fehlgeschlagene',
     ],
 ];

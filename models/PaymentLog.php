@@ -16,6 +16,7 @@ class PaymentLog extends Model
         'failed'         => 'required|boolean',
         'payment_method' => 'required',
     ];
+    public $guarded = [];
     public $belongsTo = [
         'cart' => Cart::class,
     ];

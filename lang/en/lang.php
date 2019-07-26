@@ -16,6 +16,7 @@
         ],
     ],
     'common'                   => [
+        'data'                   => 'Data',
         'email'                  => 'E-Mail',
         'payment'                => 'Payment',
         'payment_methods'        => 'Payment methods',
@@ -41,6 +42,7 @@
         'please_wait'            => 'Please wait...',
         'failed'                 => 'Failed',
         'successful'             => 'Successful',
+        'session_id'             => 'Session-ID',
     ],
     'order'                    => [
         'order_number'                        => '# Order',
@@ -162,5 +164,13 @@
     ],
     'payment_method_settings'  => [
         'description' => 'Manage payment methods',
+    ],
+    'payment_log'              => [
+        'payment_data'       => 'Payment data',
+        'data_comment'       => 'This data has been returned by the payment provider',
+        'order_data_comment' => 'This is all the order data for this payment',
+        'message_comment'    => 'This message has been returned by the payment provider',
+        'code_comment'       => 'This code has been returned by the payment provider',
+        'failed_only'        => 'Failed only',
     ],
 ];

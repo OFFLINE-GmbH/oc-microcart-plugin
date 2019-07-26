@@ -42,9 +42,10 @@ tabs:
             label: 'offline.microcart::lang.common.message'
             span: auto
             readonly: 1
-            type: text
+            type: partial
             commentAbove: 'offline.microcart::lang.payment_log.message_comment'
             tab: 'offline.microcart::lang.payment_log.payment_data'
+            path: $/offline/microcart/models/paymentlog/_data.htm
         data:
             label: 'offline.microcart::lang.common.data'
             span: auto

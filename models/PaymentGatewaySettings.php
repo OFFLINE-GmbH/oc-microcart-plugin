@@ -7,7 +7,9 @@ use Model;
 use October\Rain\Database\Traits\Encryptable;
 use OFFLINE\MicroCart\Classes\Payments\PaymentGateway;
 use OFFLINE\MicroCart\Classes\Payments\PaymentProvider;
+use OFFLINE\MicroCart\Classes\Payments\ProviderManager;
 use Session;
+use System\Classes\PluginManager;
 
 class PaymentGatewaySettings extends Model
 {
@@ -16,7 +18,7 @@ class PaymentGatewaySettings extends Model
     protected $encryptable = [];
 
     public $implement = ['System.Behaviors.SettingsModel'];
-    public $settingsCode = 'offline_microcart_settings';
+    public $settingsCode = 'offline_microcart_payment_gateway_settings';
     public $settingsFields = '$/offline/microcart/models/settings/fields_payment_gateways.yaml';
 
     /**
@@ -28,14 +30,15 @@ class PaymentGatewaySettings extends Model
      */
     protected $providers;
 
+
     public function __construct(array $attributes = [])
     {
         $this->gateway   = app(PaymentGateway::class);
-        $this->providers = collect($this->gateway->getProviders());
+
+        $this->providers = ProviderManager::instance()->all();
         $this->providers->each(function ($provider) {
             $this->encryptable = array_merge($this->encryptable, $provider->encryptedSettings());
         });
-
         parent::__construct($attributes);
     }
 
