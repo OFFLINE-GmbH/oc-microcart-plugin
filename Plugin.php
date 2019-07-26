@@ -45,6 +45,17 @@ class Plugin extends PluginBase
         ];
     }
 
+//    public function registerNavigation()
+//    {
+//        return [
+//            'main-menu-item' => [
+//                'label'        => 'offline.microcart::lang.common.orders',
+//                'url'          => Backend::url('offline/microcart/carts'),
+//                'iconSvg'      => 'plugins/offline/microcart/assets/icon.svg',
+//            ],
+//        ];
+//    }
+
     public function registerSettings()
     {
         return [

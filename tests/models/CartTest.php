@@ -3,10 +3,21 @@
 use DB;
 use OFFLINE\MicroCart\Models\Cart;
 use OFFLINE\MicroCart\Models\CartItem;
+use OFFLINE\MicroCart\Models\PaymentMethod;
 use OFFLINE\MicroCart\Tests\PluginTestCase;
 
 class CartTest extends PluginTestCase
 {
+    public function setUp()
+    {
+        PaymentMethod::create([
+            'price'            => 0.30,
+            'payment_provider' => 'stripe',
+            'percentage'       => 2.9,
+            'name'             => 'Test method',
+        ]);
+    }
+
     public function test_it_adds_products()
     {
         $this->expectsEvents('offline.microcart.cart.beforeAdd', 'offline.microcart.cart.afterAdd');

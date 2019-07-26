@@ -30,6 +30,34 @@ It **does not** provide any of these features:
 If you are looking for a full featured eCommerce solution for October CMS
 check out [OFFLINE.Mall](https://github.com/OFFLINE-GmbH/oc-mall-plugin).
 
+## Getting up and running
+
+### Create your own plugin that extends MicroCart
+
+The MicroCart plugin is meant to be extended by your own plugins.
+Reffer to [the official October CMS docs](https://octobercms.com/docs/plugin/extending)
+for a list of all extension possibilities.
+
+In this README we'll go with a plugin that allows a user to order a Voucher online.
+The plugin created will be called `OFFLINE.Vouchers`.
+
+### Backend menu
+
+The plugin does by default not register any backend menu items. You can use the
+following snippet in your own `Plugin.php` to use the default orders overview.
+
+```php
+    public function registerNavigation()
+    {
+        return [
+            'main-menu-item' => [
+                'label'        => 'Vouchers', // Your label
+                'url'          => Backend::url('offline/microcart/carts'),
+                'iconSvg'      => 'plugins/offline/microcart/assets/icon.svg',
+            ],
+        ];
+    }
+``` 
 
 ## API
 
