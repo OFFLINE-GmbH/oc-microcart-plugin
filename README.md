@@ -81,8 +81,6 @@ use OFFLINE\MicroCart\Models\CartItem;
 
 class Cart extends \OFFLINE\MicroCart\Components\Cart
 {        
-    // The onAdd method has to be implemented. You can of course
-    // override all other methods from the parent class.
     public function onAdd()
     {
         $item           = new CartItem();

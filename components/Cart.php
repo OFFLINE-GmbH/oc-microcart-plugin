@@ -96,9 +96,20 @@ abstract class Cart extends ComponentBase
     /**
      * An item is added to the cart.
      *
+     * @return array
      * @throws \Exception
      */
-    abstract public function onAdd();
+    public function onAdd()
+    {
+        $item           = new CartItem();
+        $item->name     = 'Your product';
+        $item->quantity = random_int(1, 4);
+        $item->price    = 100.00;
+
+        $this->cart->add($item);
+
+        return $this->refreshCart();
+    }
 
     /**
      * An item is removed from the cart.
