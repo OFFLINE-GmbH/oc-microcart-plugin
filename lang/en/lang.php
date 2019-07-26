@@ -9,6 +9,12 @@
             'export' => 'Export orders',
         ],
     ],
+    'components' => [
+        'cart' => [
+            'name' => 'Cart',
+            'description' => 'Displays all items in the cart',
+        ]
+    ],
     'common'                   => [
         'email'                  => 'E-Mail',
         'payment'                => 'Payment',

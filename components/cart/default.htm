@@ -1,6 +1,8 @@
-<button data-request="onAdd">
-    Add a product
-</button>
+<div>
+    <button data-request="onAdd">
+        Add a product
+    </button>
+</div>
 
 <div id="cart">
     {% partial __SELF__ ~ '::table' cart=__SELF__.cart %}
@@ -10,10 +12,62 @@
 
 {% put scripts %}
     <script>
-        $(function() {
-            $(window).on('oc.beforeRequest', function(e, context) {
-                console.log('prevent submit')
+        window.OFFLINE_MICROCART = {form: null, submitPrevented: false}
+
+        $(function () {
+
+            var form = document.getElementById('checkout')
+            window.OFFLINE_MICROCART.form = form
+
+            form.addEventListener('submit', function (e) {
+                e.preventDefault()
+
+                var validation = new Promise(function (resolve, reject) {
+                    var event = new CustomEvent('offline.microcart.checkout', {
+                        detail: {
+                            resolve: resolve,
+                            reject: reject,
+                            isHandled: false
+                        }
+                    })
+                    form.dispatchEvent(event)
+
+                    // No one cared, just submit the form...
+                    if (event.detail.isHandled !== true) {
+                        resolve()
+                    }
+                })
+
+                validation.then(function () {
+                    var $form = $(form)
+
+                    // Lock your form here
+                    $form.find('input[type="submit"]').prop('disabled', true)
+
+                    $form.request('{{ __SELF__ }}::onCheckout', {
+                        handleValidationMessage: inlineErrors,
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            this.error(jqXHR, textStatus, errorThrown)
+                            // make sure to unlock your form here
+                            $form.find('input[type="submit"]').prop('disabled', false)
+                        }
+                    })
+                })
             })
+
+            function inlineErrors (_, fields) {
+                $('[data-validate-for]').text('')
+                $.each(fields, function (fieldName, fieldMessages) {
+                    var $field = $('[data-validate-for="' + fieldName + '"]')
+                    if ($field.length) {
+                        $field.text(fieldMessages[0])
+                        $field.addClass('visible')
+                    }
+                })
+                $(form).one('ajaxError', function (event) {
+                    event.preventDefault()
+                })
+            }
         })
     </script>
 {% endput %}

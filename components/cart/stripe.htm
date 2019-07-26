@@ -11,17 +11,22 @@
 <script>
     $(function () {
 
-        {# Lazy load stripe.js to ensure everything works when changing the payment method. #}
-        var s = document.createElement('script');
-        s.type = 'text/javascript';
-        s.src = 'https://js.stripe.com/v3/';
-        s.onload = initStripe;
+        if (!window.stripeLoaded) {
+            {# Lazy load stripe.js to ensure everything works when changing the payment method. #}
+            var s = document.createElement('script');
+            s.type = 'text/javascript';
+            s.src = 'https://js.stripe.com/v3/';
+            s.onload = initStripe;
 
-        document.head.appendChild(s)
+            document.head.appendChild(s)
+        } else {
+            initStripe()
+        }
 
         function initStripe () {
             var stripe = Stripe('{{ method.settings.stripe_publishable_key }}');
             var elements = stripe.elements();
+            var form = document.getElementById('checkout')
 
             var card = elements.create('card');
             card.mount('#card-element');
@@ -35,10 +40,17 @@
                 }
             });
 
-            var form = document.getElementById('checkout');
-            form.addEventListener('submit', function (event) {
-                event.preventDefault();
-                debugger
+            form.removeEventListener('offline.microcart.checkout', checkoutHandler, true);
+            form.addEventListener('offline.microcart.checkout', checkoutHandler, true);
+
+            window.stripeLoaded = true
+
+            function checkoutHandler (event) {
+                // Tell the form submission that we're handling it via the Promise attached to the Event.
+                if (event.detail.isHandled) {
+                    return
+                }
+                event.detail.isHandled = true
 
                 var submit = form.querySelector('[type="submit"]')
                 submit.classList.add('oc-loading')
@@ -49,18 +61,14 @@
                         var errorElement = document.getElementById('card-errors');
                         errorElement.textContent = result.error.message;
                         submit.classList.remove('oc-loading')
-                        submit.disabled = false
+                        event.detail.reject()
                     } else {
-                        stripeTokenHandler(result.token);
+                        var input = document.getElementById('stripe-token')
+                        input.value = result.token.id
+                        event.detail.resolve()
                     }
+                    submit.disabled = false
                 });
-            });
-
-            function stripeTokenHandler (token) {
-                var input = document.getElementById('stripe-token')
-                input.value = token.id
-
-                $('#checkout').request('{{ __SELF__ }}::onCheckout')
             }
         }
     });

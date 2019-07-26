@@ -1,3 +1,5 @@
+<h2>Your cart</h2>
+
 <table class="table">
     <tbody>
     {% for index, item in cart.list_items %}
@@ -38,7 +40,7 @@
         <td class="bold">Sub total</td>
         <td class="bold text-right"></td>
         <td class="bold text-right"></td>
-        <td class="bold text-right">{{ cart.totals.servicePostTaxes | microcart_money }}</td>
+        <td class="bold text-right">{{ cart.totals.subPostTaxes | microcart_money }}</td>
     </tr>
 
     {% for index, item in cart.service_fees %}
@@ -47,7 +49,7 @@
             <td>{{ item.name }}</td>
             <td class="text-right">{{ item.price }}</td>
             <td class="text-right">{{ item.quantity }}</td>
-            <td class="text-right">{{ item.total | microcart_money}}</td>
+            <td class="text-right">{{ item.total | microcart_money }}</td>
         </tr>
     {% endfor %}
 
@@ -61,11 +63,11 @@
 
 
     {% if cart.payment_method_id %}
-    <tr>
-        <td></td>
-        <td colspan="3">{{ cart.payment_method.label }}</td>
-        <td class="text-right">{{ cart.totals.paymentPostTaxes | microcart_money }}</td>
-    </tr>
+        <tr>
+            <td></td>
+            <td colspan="3">{{ cart.payment_method.label }}</td>
+            <td class="text-right">{{ cart.totals.paymentPostTaxes | microcart_money }}</td>
+        </tr>
     {% endif %}
 
     <tr>

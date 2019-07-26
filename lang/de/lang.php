@@ -9,6 +9,12 @@
             'export' => 'Bestellungen exportieren',
         ],
     ],
+    'components' => [
+        'cart' => [
+            'name' => 'Warenkorb',
+            'description' => 'Listet alle Produkte im Warenkorb auf',
+        ]
+    ],
     'common'                   => [
         'email'                  => 'E-Mail',
         'payment'                => 'Zahlung',

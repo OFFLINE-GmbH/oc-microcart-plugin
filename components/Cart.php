@@ -4,8 +4,8 @@ use Cms\Classes\ComponentBase;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Collection;
 use October\Rain\Exception\ValidationException;
-use OFFLINE\MicroCart\Classes\Payments\PaymentRedirector;
 use OFFLINE\MicroCart\Classes\Payments\PaymentGateway;
+use OFFLINE\MicroCart\Classes\Payments\PaymentRedirector;
 use OFFLINE\MicroCart\Classes\Payments\PaymentService;
 use OFFLINE\MicroCart\Models\Cart as CartModel;
 use OFFLINE\MicroCart\Models\CartItem;
@@ -26,8 +26,8 @@ class Cart extends ComponentBase
     public function componentDetails()
     {
         return [
-            'name'        => 'Cart',
-            'description' => 'No description provided yet...',
+            'name'        => 'offline.microcart::lang.components.cart.name',
+            'description' => 'offline.microcart::lang.components.cart.description',
         ];
     }
 
