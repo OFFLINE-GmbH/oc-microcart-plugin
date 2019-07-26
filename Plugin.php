@@ -38,12 +38,12 @@ class Plugin extends PluginBase
         ];
     }
 
-    public function registerComponents()
-    {
-        return [
-            \OFFLINE\MicroCart\Components\Cart::class => 'cart',
-        ];
-    }
+//    public function registerComponents()
+//    {
+//        return [
+//            \OFFLINE\MicroCart\Components\Cart::class => 'cart',
+//        ];
+//    }
 
 //    public function registerNavigation()
 //    {

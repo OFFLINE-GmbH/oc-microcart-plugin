@@ -27,7 +27,7 @@ It **does not** provide any of these features:
 * Shipping rules
 * ... and lots of other extended eCommerce features
 
-If you are looking for a full featured eCommerce solution for October CMS
+If you are looking for a fully featured eCommerce solution for October CMS
 check out [OFFLINE.Mall](https://github.com/OFFLINE-GmbH/oc-mall-plugin).
 
 ## Getting up and running
@@ -39,7 +39,6 @@ Reffer to [the official October CMS docs](https://octobercms.com/docs/plugin/ext
 for a list of all extension possibilities.
 
 In this README we'll go with a plugin that allows a user to order a Voucher online.
-The plugin created will be called `OFFLINE.Vouchers`.
 
 ### Backend menu
 
@@ -57,6 +56,63 @@ following snippet in your own `Plugin.php` to use the default orders overview.
             ],
         ];
     }
+``` 
+
+### Cart component
+
+The plugin does not register any components but it provides you with a `Cart` base 
+component that you can extend.
+
+Simply register your own component and build from there.
+
+```php
+    public function registerComponents()
+    {
+        return [
+            \YourVendor\YourPlugin\Components\Cart::class => 'cart',
+        ];
+    }
+```
+
+```php
+<?php namespace YourVendor\YourPlugin\Components;
+
+use OFFLINE\MicroCart\Models\CartItem;
+
+class Cart extends \OFFLINE\MicroCart\Components\Cart
+{        
+    // The onAdd method has to be implemented. You can of course
+    // override all other methods from the parent class.
+    public function onAdd()
+    {
+        $item           = new CartItem();
+        $item->name     = 'Your product';
+        $item->quantity = random_int(1, 4);
+        $item->price    = 100.00;
+
+        $this->cart->add($item);
+
+        return $this->refreshCart();
+    }
+}
+```
+
+To modify validation rules and messages take a look at the `getValidationRules`, `getFieldNames`
+and `getValidationMessages` methods on the base `Cart` class.
+
+Also, take a look at [the markup provided by the Cart component](./components/cart) to get you started.
+
+### Link you model to cart items
+
+The easiest way to link a model to a `CartItem` is to add a simple `belongsTo` relationship.
+
+```php
+class Voucher extends Model
+{
+    public $belongsTo = [
+        'cartitem' => CartItem::class
+    ];
+}
 ``` 
 
 ## API

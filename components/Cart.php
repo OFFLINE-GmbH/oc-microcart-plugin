@@ -12,7 +12,7 @@ use OFFLINE\MicroCart\Models\CartItem;
 use OFFLINE\MicroCart\Models\PaymentMethod;
 use Validator;
 
-class Cart extends ComponentBase
+abstract class Cart extends ComponentBase
 {
     /**
      * @var CartModel
@@ -96,20 +96,9 @@ class Cart extends ComponentBase
     /**
      * An item is added to the cart.
      *
-     * @return array
      * @throws \Exception
      */
-    public function onAdd()
-    {
-        $item           = new CartItem();
-        $item->name     = 'Example product #' . str_random(12);
-        $item->quantity = random_int(1, 4);
-        $item->price    = random_int(10, 200);
-
-        $this->cart->add($item);
-
-        return $this->refreshCart();
-    }
+    abstract public function onAdd();
 
     /**
      * An item is removed from the cart.
