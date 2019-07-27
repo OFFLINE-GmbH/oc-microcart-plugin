@@ -4,3 +4,4 @@
     - create_offline_microcart_items.php
     - create_offline_microcart_taxes.php
     - create_offline_microcart_payment_methods.php
+    - create_offline_microcart_payments_log.php
