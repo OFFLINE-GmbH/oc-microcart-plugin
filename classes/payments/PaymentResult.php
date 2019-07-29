@@ -14,6 +14,26 @@ use OFFLINE\MicroCart\Models\PaymentLog;
 class PaymentResult
 {
     /**
+     * The checkout failed.
+     * @var string
+     */
+    const RESULT_FAILED = 'failed';
+    /**
+     * The checkout succeeded.
+     * @var string
+     */
+    const RESULT_SUCCEEDED = 'done';
+    /**
+     * The checkout is pending.
+     * @var string
+     */
+    const RESULT_PENDING = 'pending';
+    /**
+     * The checkout was cancelled.
+     * @var string
+     */
+    const RESULT_CANCELLED = 'cancelled';
+    /**
      * If the payment was successful.
      * @var bool
      */

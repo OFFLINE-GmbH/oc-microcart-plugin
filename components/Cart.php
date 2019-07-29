@@ -6,6 +6,7 @@ use Illuminate\Support\Collection;
 use October\Rain\Exception\ValidationException;
 use OFFLINE\MicroCart\Classes\Payments\PaymentGateway;
 use OFFLINE\MicroCart\Classes\Payments\PaymentRedirector;
+use OFFLINE\MicroCart\Classes\Payments\PaymentResult;
 use OFFLINE\MicroCart\Classes\Payments\PaymentService;
 use OFFLINE\MicroCart\Models\Cart as CartModel;
 use OFFLINE\MicroCart\Models\CartItem;
@@ -22,6 +23,10 @@ abstract class Cart extends ComponentBase
      * @var Collection
      */
     public $paymentMethods;
+    /**
+     * @var string
+     */
+    public $result;
 
     public function componentDetails()
     {
@@ -40,6 +45,7 @@ abstract class Cart extends ComponentBase
     {
         $this->cart           = CartModel::fromSession();
         $this->paymentMethods = PaymentMethod::orderBy('sort_order')->get();
+        $this->result         = input('result', PaymentResult::RESULT_PENDING);
     }
 
     /**

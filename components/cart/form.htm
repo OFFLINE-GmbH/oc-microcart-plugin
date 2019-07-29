@@ -1,0 +1,11 @@
+<div>
+    <button data-request="onAdd">
+        Add a product
+    </button>
+</div>
+
+<div id="cart">
+    {% partial __SELF__ ~ '::table' cart=__SELF__.cart %}
+</div>
+
+{% partial __SELF__ ~ '::checkout' %}

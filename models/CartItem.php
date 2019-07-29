@@ -3,6 +3,11 @@
 use Model;
 use October\Rain\Database\Traits\Sortable;
 
+/**
+ * CartItem class.
+ *
+ * @property Cart $cart
+ */
 class CartItem extends Model
 {
     /**

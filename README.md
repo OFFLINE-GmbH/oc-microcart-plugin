@@ -147,7 +147,7 @@ class Plugin extends PluginBase
 }
 ```  
 
-### Link you model to cart items
+### Link your model to cart items
 
 The easiest way to link a model to a `CartItem` is to add a simple `belongsTo` relationship.
 

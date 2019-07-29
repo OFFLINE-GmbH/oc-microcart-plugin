@@ -7,6 +7,12 @@ use Model;
 use OFFLINE\MicroCart\Classes\Totals;
 use Session;
 
+/**
+ * Class Cart
+ * @package OFFLINE\MicroCart\Models
+ *
+ * @property Totals $totals
+ */
 class Cart extends Model
 {
     use \October\Rain\Database\Traits\Validation;

@@ -120,7 +120,7 @@ class PaymentRedirector
             $result = new PaymentResult($paymentProvider, $paymentProvider->getCartFromSession());
 
             $paymentProvider->init();
-            
+
             return $this->handlePaymentResult($paymentProvider->complete($result));
         }
 
@@ -154,7 +154,7 @@ class PaymentRedirector
      */
     protected function getFailedUrl()
     {
-        return $this->resultUrl('failed');
+        return $this->resultUrl(PaymentResult::RESULT_FAILED);
     }
 
     /**
@@ -164,7 +164,7 @@ class PaymentRedirector
      */
     protected function getCancelledUrl()
     {
-        return $this->resultUrl('cancelled');
+        return $this->resultUrl(PaymentResult::RESULT_CANCELLED);
     }
 
     /**
@@ -174,6 +174,6 @@ class PaymentRedirector
      */
     protected function getSuccessfulUrl()
     {
-        return $this->resultUrl('done');
+        return $this->resultUrl(PaymentResult::RESULT_SUCCEEDED);
     }
 }
