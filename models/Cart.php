@@ -365,8 +365,8 @@ class Cart extends Model
         $address[] = $this->shipping_lines;
 
         $address[] = $reverseZip
-            ? $this->billing_zip . ' ' . $this->billing_city
-            : $this->billing_city . ' ' . $this->billing_zip;
+            ? $this->shipping_zip . ' ' . $this->shipping_city
+            : $this->shipping_city . ' ' . $this->shipping_zip;
 
         $address[] = $this->shipping_country;
 
