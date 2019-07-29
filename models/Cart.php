@@ -177,7 +177,7 @@ class Cart extends Model
 
             $existing->fill(array_except($item->toArray(), 'quantity', 'price'));
             $existing->price = $item->price / 100;
-            
+
             // If a $quantity was specified, enforce it for this item. This is done separately
             // to trigger the respective events.
             if ($quantity !== null) {
@@ -350,6 +350,67 @@ class Cart extends Model
         }
 
         return $this->cachedDiscounts = $this->items->where('kind', CartItem::KIND_DISCOUNT);
+    }
+
+    /**
+     * Returns the shipping address as formatted and escaped HTML string.
+     */
+    public function getShippingAddressHtml($reverseZip = false): string
+    {
+        $address = [];
+        if ($this->shipping_company) {
+            $address[] = $this->shipping_company;
+        }
+        $address[] = $this->shipping_firstname . ' ' . $this->shipping_lastname;
+        $address[] = $this->shipping_lines;
+
+        $address[] = $reverseZip
+            ? $this->billing_zip . ' ' . $this->billing_city
+            : $this->billing_city . ' ' . $this->billing_zip;
+
+        $address[] = $this->shipping_country;
+
+        $address = array_map('e', $address);
+
+        return implode('<br>', $address);
+    }
+
+    /**
+     * Returns the billing address as formatted and escaped HTML string.
+     *
+     * @param bool $reverseZip
+     *
+     * @return string
+     */
+    public function getBillingAddressHtml($reverseZip = false): string
+    {
+        $address = [];
+        if ($this->billing_company) {
+            $address[] = $this->billing_company;
+        }
+
+        $address[] = $this->billing_firstname . ' ' . $this->billing_lastname;
+        $address[] = $this->billing_lines;
+
+        $address[] = $reverseZip
+            ? $this->billing_zip . ' ' . $this->billing_city
+            : $this->billing_city . ' ' . $this->billing_zip;
+
+        $address[] = $this->billing_country;
+
+        $address = array_map('e', $address);
+
+        return implode('<br>', $address);
+    }
+
+    public function getShippingAddressHtmlZipReversed(): string
+    {
+        return $this->getShippingAddressHtml(true);
+    }
+
+    public function getBillingAddressHtmlZipReversed(): string
+    {
+        return $this->getBillingAddressHtml(true);
     }
 
     private function flushCache(): void

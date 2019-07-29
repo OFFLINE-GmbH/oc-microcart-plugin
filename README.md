@@ -271,6 +271,26 @@ $cart->service_fees->first() === $shipping; // true
 $cart->discounts->first()    === $discount; // true
 ```  
 
+#### Print the customer's address
+
+After a `Cart` checkout has been successful, you can use the following helpers
+to print the customer's address as an escaped HTML string.
+
+```php
+$cart->getShippingAddressHtml();
+$cart->getBillingAddressHtml();
+// Company
+// Firstname Lastname
+// Street 123
+// ZIP City
+
+$cart->getBillingAddressHtmlZipReversed();
+// Company
+// Firstname Lastname
+// Street 123
+// City ZIP
+```
+
 ### CartItem
 
 #### Create an item
