@@ -353,26 +353,57 @@ class Cart extends Model
     }
 
     /**
+     * Return all parts of the shipping address as an array.
+     *
+     * @param bool $reverseZip
+     *
+     * @return array
+     */
+    public function getShippingAddressArray($reverseZip = false): array
+    {
+        $parts = [
+            $this->shipping_company,
+            $this->shipping_firstname . ' ' . $this->shipping_lastname,
+            $this->shipping_lines,
+            $reverseZip
+                ? $this->shipping_city . ' ' . $this->shipping_zip
+                : $this->shipping_zip . ' ' . $this->shipping_city,
+            $this->shipping_country,
+        ];
+
+        return array_filter($parts);
+    }
+
+    /**
      * Returns the shipping address as formatted and escaped HTML string.
      */
     public function getShippingAddressHtml($reverseZip = false): string
     {
-        $address = [];
-        if ($this->shipping_company) {
-            $address[] = $this->shipping_company;
-        }
-        $address[] = $this->shipping_firstname . ' ' . $this->shipping_lastname;
-        $address[] = $this->shipping_lines;
-
-        $address[] = $reverseZip
-            ? $this->shipping_city . ' ' . $this->shipping_zip
-            : $this->shipping_zip . ' ' . $this->shipping_city;
-
-        $address[] = $this->shipping_country;
-
-        $address = array_map('e', $address);
+        $address = array_map('e', $this->getShippingAddressArray($reverseZip));
 
         return implode('<br>', $address);
+    }
+
+    /**
+     * Return all parts of the billing address as an array.
+     *
+     * @param bool $reverseZip
+     *
+     * @return array
+     */
+    public function getBillingAddressArray($reverseZip = false): array
+    {
+        $parts = [
+            $this->billing_company,
+            $this->billing_firstname . ' ' . $this->billing_lastname,
+            $this->billing_lines,
+            $reverseZip
+                ? $this->billing_city . ' ' . $this->billing_zip
+                : $this->billing_zip . ' ' . $this->billing_city,
+            $this->billing_country,
+        ];
+
+        return array_filter($parts);
     }
 
     /**
@@ -384,21 +415,7 @@ class Cart extends Model
      */
     public function getBillingAddressHtml($reverseZip = false): string
     {
-        $address = [];
-        if ($this->billing_company) {
-            $address[] = $this->billing_company;
-        }
-
-        $address[] = $this->billing_firstname . ' ' . $this->billing_lastname;
-        $address[] = $this->billing_lines;
-
-        $address[] = $reverseZip
-            ? $this->billing_city . ' ' . $this->billing_zip
-            : $this->billing_zip . ' ' . $this->billing_city;
-
-        $address[] = $this->billing_country;
-
-        $address = array_map('e', $address);
+        $address = array_map('e', $this->getBillingAddressArray($reverseZip));
 
         return implode('<br>', $address);
     }

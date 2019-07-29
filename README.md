@@ -274,10 +274,12 @@ $cart->discounts->first()    === $discount; // true
 #### Print the customer's address
 
 After a `Cart` checkout has been successful, you can use the following helpers
-to print the customer's address as an escaped HTML string.
+to get the customer's address as an array or an escaped HTML string.
 
 ```php
-$cart->getShippingAddressHtml();
+$cart->getShippingAddressArray();
+// ['Company', 'Firstname Lastname', ...];
+
 $cart->getBillingAddressHtml();
 // Company
 // Firstname Lastname
