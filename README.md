@@ -133,16 +133,18 @@ class YourCustomProvider extends PaymentProvider
 }
 ```
 
-In your `Plugin.php` register this custom provider by using the following code.
+In your `Plugin.php` register this custom provider by returning them from a `registerPaymentProvider` method.
 
 ```php
 use OFFLINE\MicroCart\Classes\Payments\PaymentGateway;
 
 class Plugin extends PluginBase
 {
-    public function boot()
+    public function registerPaymentProviders()
     {
-        app(PaymentGateway::class)->registerProvider(new YourCustomProvider());
+        return [
+            new YourCustomProvider(),
+        ];
     }
 }
 ```  
