@@ -1,3 +1,4 @@
+{# If you don't use stripe you can also use data attributes and remove the scripts partial #}
 <form id="checkout" method="post" action="">
 
     <h2>Payment method</h2>
@@ -74,5 +75,5 @@
         {% endfor %}
     </div>
 
-    <button type="submit">Checkout</button>
+    <button type="submit" data-attach-loading>Checkout</button>
 </form>

@@ -118,7 +118,8 @@ You can `return $this->refreshCart();` from your methods to refresh the cart dis
 
 ### Custom payment providers
 
-To register a custom `PaymentProvider` create a class that extends MicroCart's PaymentProvider class:
+To register a custom `PaymentProvider` create a class that extends MicroCart's PaymentProvider class. [
+Check out the existing providers](./classes/payments) to get some inspiration on how to create your own.
 
 ```php
 <?php
@@ -413,4 +414,8 @@ Fired after a checkout was successful.
 
 Fired after a checkout has failed.
 
-* `$result`: a `PaymentResult` instance  
+* `$result`: a `?PaymentResult` instance (nullable)  
+
+#### `offline.microcart.checkout.cancelled`
+
+Fired after a checkout has been cancelled.

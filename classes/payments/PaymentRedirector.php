@@ -38,19 +38,26 @@ class PaymentRedirector
     /**
      * Handle the final redirect after all payment processing is done.
      *
-     * @param $state
+     * @param                    $state
+     *
+     * @param PaymentResult|null $result
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function finalRedirect($state)
+    public function finalRedirect($state, ?PaymentResult $result = null)
     {
         $states = [
-            'failed'     => $this->getFailedUrl(),
-            'cancelled'  => $this->getCancelledUrl(),
-            'successful' => $this->getSuccessfulUrl(),
+            'failed'    => $this->getFailedUrl(),
+            'cancelled' => $this->getCancelledUrl(),
+            'succeeded' => $this->getSuccessfulUrl(),
         ];
 
         $url = $states[$state];
+
+        // offline.microcart.checkout.failed
+        // offline.microcart.checkout.cancelled
+        // offline.microcart.checkout.succeeded
+        Event::fire('offline.microcart.checkout.' . $state, [$result]);
 
         return redirect()->to($url);
     }
@@ -69,18 +76,12 @@ class PaymentRedirector
         }
 
         if ($result->successful) {
-            // Only trigger the checkout succeeded event for the checkout flow (not for later payments)
-            Event::fire('offline.microcart.checkout.succeeded', [$result]);
-
             Cart::regenerateSessionId();
 
-            return $this->finalRedirect('successful');
+            return $this->finalRedirect('succeeded', $result);
         }
 
-
-        Event::fire('offline.microcart.checkout.failed', [$result]);
-
-        return $this->finalRedirect('failed');
+        return $this->finalRedirect('failed', $result);
     }
 
     /**
@@ -124,7 +125,7 @@ class PaymentRedirector
             return $this->handlePaymentResult($paymentProvider->complete($result));
         }
 
-        return $this->finalRedirect('successful');
+        return $this->finalRedirect('succeeded');
     }
 
     /**
