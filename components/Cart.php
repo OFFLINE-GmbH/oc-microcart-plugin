@@ -203,7 +203,6 @@ abstract class Cart extends ComponentBase
         return [
             'email' => 'required|email',
 
-            'shipping_company'   => 'required',
             'shipping_firstname' => 'required',
             'shipping_lastname'  => 'required',
             'shipping_lines'     => 'required',
@@ -212,7 +211,6 @@ abstract class Cart extends ComponentBase
             'shipping_country'   => 'required',
 
             'billing_differs'   => 'boolean',
-            'billing_company'   => 'required_if:billing_differs,1',
             'billing_firstname' => 'required_if:billing_differs,1',
             'billing_lastname'  => 'required_if:billing_differs,1',
             'billing_lines'     => 'required_if:billing_differs,1',
@@ -259,7 +257,7 @@ abstract class Cart extends ComponentBase
     protected function getValidationMessages(): array
     {
         return [
-            // 'shipping_company.required' = 'Specify a shipping company',
+            // 'shipping_company.required' => 'Specify a shipping company',
         ];
     }
 }
