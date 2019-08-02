@@ -287,12 +287,12 @@ $cart->ensure($item);
 You can access all cart items using the `$cart->items` relation.
 
 You also have access to filtered `list_items`, `service_fees` and `discounts` 
-properties that only contain the respective item types.
+properties that only contain the given item types.
 
 ```php
 $item     = new CartItem(['name' => 'A product']);
 $shipping = new CartItem(['name' => 'Shipping fee', 'kind' => CartItem::KIND_SERVICE]);
-$discount = new CartItem(['name' => 'Discount',  'kind' => CartItem::KIND_DISCOUNT]);
+$discount = new CartItem(['name' => 'Discount',     'kind' => CartItem::KIND_DISCOUNT]);
 
 $cart->addMany($item, $shipping, $discount);
 
@@ -311,15 +311,15 @@ $cart->getShippingAddressArray();
 // ['Company', 'Firstname Lastname', ...];
 
 $cart->getBillingAddressHtml();
-// Company
-// Firstname Lastname
-// Street 123
+// Company<br />
+// Firstname Lastname<br />
+// Street 123<br />
 // ZIP City
 
 $cart->getBillingAddressHtmlZipReversed();
-// Company
-// Firstname Lastname
-// Street 123
+// Company<br />
+// Firstname Lastname<br />
+// Street 123<br />
 // City ZIP
 ```
 
@@ -343,21 +343,23 @@ $item->meta = [
 ];
 // $item->tax_id = 2;           // If not specified the default tax will be used. 
 // $item->tax_free = true;      // Don't add taxes to this item, not even the default tax. 
-// $item->is_before_tax = true; // The specified price does not contain taxes. 
+// $item->is_before_tax = true; // The specified price does not include taxes. 
 ```
 
 #### Access item information
 
 ```php
+// Create an example item
 $item           = new CartItem(['name' => 'An item']);
 $item->price    = 10.00;
 $item->quantity = 2;
 $item->tax_id   = 1; // 10% tax
 
+// Access the item's information
 $item->price;        // 10.00
 $item->quantity;     // 2
 $item->subtotal;     // 20.00 => price * quantity
-$item->tax_amount;   // 2.00
+$item->tax_amount;   //  2.00 => 10 % on price 
 $item->total;        // 22.00 => (price * quantity) + tax_amount
 ```
 
