@@ -20,6 +20,13 @@ abstract class PluginTestCase extends \PluginTestCase
         $pluginManager->bootAll(true);
 
         GeneralSettings::set('default_currency', 'CHF');
+
+        PaymentMethod::create([
+            'price'            => 0.30,
+            'payment_provider' => 'stripe',
+            'percentage'       => 2.9,
+            'name'             => 'Test method',
+        ]);
     }
 
     public function tearDown()

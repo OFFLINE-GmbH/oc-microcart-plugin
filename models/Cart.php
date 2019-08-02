@@ -85,8 +85,9 @@ class Cart extends Model
      */
     public static function fromSession(): self
     {
-        return self::orderBy('created_at',
-            'DESC')->whereNull('payment_state')->firstOrCreate(['session_id' => self::getSessionId()]);
+        return self::orderBy('created_at', 'DESC')
+                   ->whereNull('payment_state')
+                   ->firstOrCreate(['session_id' => self::getSessionId()]);
     }
 
     public function scopeCompletedOrders($q)
@@ -101,6 +102,10 @@ class Cart extends Model
      */
     private static function getSessionId(): string
     {
+        if (app()->runningUnitTests()) {
+            return 'testing';
+        }
+
         $sessionId = Cookie::get('cart_session_id') ?? str_random(100);
         Cookie::queue('cart_session_id', $sessionId, 9e6);
 
@@ -136,10 +141,10 @@ class Cart extends Model
             $item->quantity = $quantity;
         }
 
-        if ($item->is_tax_free !== true) {
+        if ($item->is_tax_free !== true && optional($item->taxes)->count() === 0) {
             $defaultTax = Tax::getDefault();
             if ($defaultTax) {
-                $item->taxes()->attach($defaultTax->id);
+                $item->taxes()->sync($defaultTax->id);
             }
         }
 
@@ -147,6 +152,7 @@ class Cart extends Model
 
         $this->items()->add($item);
         $this->reloadRelations('items');
+        $item->reloadRelations('cart');
 
         $this->flushCache();
 
@@ -179,6 +185,7 @@ class Cart extends Model
             throw new \InvalidArgumentException('Only CartItems with a "code" property can be ensured');
         }
 
+        /** @var CartItem $existing */
         if ($existing = $this->items->where('code', $item->code)->first()) {
 
             $existing->fill(array_except($item->toArray(), 'quantity', 'price'));
@@ -193,6 +200,7 @@ class Cart extends Model
             $existing->save();
 
             $this->reloadRelations('items');
+            $existing->reloadRelations('cart');
 
             return;
         }

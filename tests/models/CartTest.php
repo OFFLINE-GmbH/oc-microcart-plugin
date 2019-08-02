@@ -3,25 +3,12 @@
 use DB;
 use OFFLINE\MicroCart\Models\Cart;
 use OFFLINE\MicroCart\Models\CartItem;
-use OFFLINE\MicroCart\Models\PaymentMethod;
 use OFFLINE\MicroCart\Tests\PluginTestCase;
 
 class CartTest extends PluginTestCase
 {
-    public function setUp()
-    {
-        PaymentMethod::create([
-            'price'            => 0.30,
-            'payment_provider' => 'stripe',
-            'percentage'       => 2.9,
-            'name'             => 'Test method',
-        ]);
-    }
-
     public function test_it_adds_products()
     {
-        $this->expectsEvents('offline.microcart.cart.beforeAdd', 'offline.microcart.cart.afterAdd');
-
         $cart = Cart::fromSession();
 
         $item           = new CartItem();
@@ -38,8 +25,6 @@ class CartTest extends PluginTestCase
 
     public function test_it_ensures_products()
     {
-        $this->expectsEvents('offline.microcart.cart.beforeAdd', 'offline.microcart.cart.afterAdd');
-
         $cart = Cart::fromSession();
 
         $item           = new CartItem();
@@ -62,13 +47,6 @@ class CartTest extends PluginTestCase
 
     public function test_it_ensures_product_quantities()
     {
-        $this->expectsEvents(
-            'offline.microcart.cart.beforeAdd',
-            'offline.microcart.cart.afterAdd',
-            'offline.microcart.cart.beforeQuantityChange',
-            'offline.microcart.cart.afterQuantityChange'
-        );
-
         $cart = Cart::fromSession();
 
         $item           = new CartItem();
@@ -93,8 +71,6 @@ class CartTest extends PluginTestCase
 
     public function test_it_removes_products()
     {
-        $this->expectsEvents('offline.microcart.cart.beforeRemove', 'offline.microcart.cart.afterRemove');
-
         $cart = Cart::fromSession();
 
         $itemA = new CartItem(['name' => 'A']);
@@ -116,8 +92,6 @@ class CartTest extends PluginTestCase
 
     public function test_it_removes_products_by_code()
     {
-        $this->expectsEvents('offline.microcart.cart.beforeRemove', 'offline.microcart.cart.afterRemove');
-
         $cart = Cart::fromSession();
 
         $itemA = new CartItem(['name' => 'A', 'code' => 'removeme']);
@@ -138,25 +112,16 @@ class CartTest extends PluginTestCase
 
     public function test_it_updates_quantities()
     {
-        $this->expectsEvents(
-            'offline.microcart.cart.beforeQuantityChange',
-            'offline.microcart.cart.afterQuantityChange'
-        );
-
         $cart = Cart::fromSession();
-
         $item = new CartItem(['name' => 'An item']);
 
         $cart->add($item);
-
         $this->assertEquals(1, $cart->items->first()->quantity);
 
         $cart->setQuantity($item->id, 5);
-
         $this->assertEquals(5, $cart->items->first()->quantity);
 
         $cart->setQuantity($item, 10);
-
         $this->assertEquals(10, $cart->items->first()->quantity);
     }
 }
