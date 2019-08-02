@@ -1,5 +1,5 @@
 {
-  "name": "offline/oc-micro-cart-plugin",
+  "name": "offline/oc-microcart-plugin",
   "type": "october-plugin",
   "description": "Simple shopping cart for October CMS",
   "keywords": [
