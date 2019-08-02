@@ -1,5 +1,8 @@
 {
     "require-dev": {
         "mockery/mockery": "^1.2"
+    },
+    "require": {
+        "ticketpark/saferpay-json-api": "^1.4"
     }
 }

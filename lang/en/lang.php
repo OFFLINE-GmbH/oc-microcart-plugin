@@ -161,6 +161,12 @@
             'test_mode'         => 'Test mode',
             'test_mode_comment' => 'Run all payments in the PayPal Sandbox.',
         ],
+        'six'         => [
+            'customer_id' => 'Customer ID',
+            'terminal_id' => 'Terminal ID',
+            'api_key'     => 'API Key',
+            'api_secret'  => 'API Secret',
+        ],
     ],
     'payment_method_settings'  => [
         'description' => 'Manage payment methods',

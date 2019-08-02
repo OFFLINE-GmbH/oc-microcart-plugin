@@ -14,7 +14,7 @@ The `OFFLINE.MicroCart` plugin provides the following features:
 
 * A `Cart` model with a nice API to add and remove `CartItems`
 * A `Cart` component base, that is meant to be extended by you
-* `Stripe`, `PayPal` and `SIX` payment integrations
+* `Stripe`, `PayPal` and `SIX SaferPay` payment integrations
 * Support to add custom payment gateways
 * Numerous events for you to hook into 
 
