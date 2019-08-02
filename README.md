@@ -14,7 +14,7 @@ The `OFFLINE.MicroCart` plugin provides the following features:
 
 * A `Cart` model with a nice API to add and remove `CartItems`
 * A `Cart` component base, that is meant to be extended by you
-* `Stripe` and `PayPal` payment integrations
+* `Stripe`, `PayPal` and `SIX` payment integrations
 * Support to add custom payment gateways
 * Numerous events for you to hook into 
 
@@ -35,10 +35,12 @@ check out [OFFLINE.Mall](https://github.com/OFFLINE-GmbH/oc-mall-plugin).
 ### Create your own plugin that extends MicroCart
 
 The MicroCart plugin is meant to be extended by your own plugins.
-Reffer to [the official October CMS docs](https://octobercms.com/docs/plugin/extending)
+Refer to [the official October CMS docs](https://octobercms.com/docs/plugin/extending)
 for a list of all extension possibilities.
 
-In this README we'll go with a plugin that allows a user to order a Voucher online.
+```bash
+php artisan create:plugin YourVendor.PluginName
+```
 
 ### Backend menu
 
@@ -50,7 +52,7 @@ following snippet in your own `Plugin.php` to use the default orders overview.
     {
         return [
             'main-menu-item' => [
-                'label'        => 'Vouchers', // Your label
+                'label'        => 'Your Plugin', // Your label
                 'url'          => \Backend::url('offline/microcart/carts'),
                 'iconSvg'      => 'plugins/offline/microcart/assets/icon.svg',
             ],
@@ -65,6 +67,12 @@ component that you can extend.
 
 Simply register your own component and build from there.
 
+```bash
+php artisan create:component YourVendor.PluginName Cart
+```
+
+Register your component in your `Plugin.php`.
+
 ```php
     public function registerComponents()
     {
@@ -74,6 +82,8 @@ Simply register your own component and build from there.
     }
 ```
 
+Make sure the component extends MicroCart's base component.
+
 ```php
 <?php namespace YourVendor\YourPlugin\Components;
 
@@ -81,11 +91,10 @@ use OFFLINE\MicroCart\Models\CartItem;
 
 class Cart extends \OFFLINE\MicroCart\Components\Cart
 {        
-
     public function onRun()
     {
         // An off-site payment has been completed. Important, this code
-        // needs to be present if you are using PayPal. 
+        // needs to be present if you are using PayPal or Six. 
         if ($type = request()->input('return')) {
             return (new PaymentRedirector($this->page->page->fileName))->handleOffSiteReturn($type);
         }
@@ -110,11 +119,16 @@ class Cart extends \OFFLINE\MicroCart\Components\Cart
 To modify validation rules and messages take a look at the `getValidationRules`, `getFieldNames`
 and `getValidationMessages` methods on the base `Cart` class.
 
-Also, take a look at [the markup provided by the Cart component](./components/cart) to get you started.
+Copy [the default partials](./components/cart) from MicroCart's base component to your own component.
+Modify them as needed.
+
+```bash
+cp -rv plugins/offline/microcart/components/cart/* plugins/yourvendor/yourplugin/components/cart/
+```
 
 #### Updating the cart partials
 
-You can `return $this->refreshCart();` from your methods to refresh the cart display. 
+You can `return $this->refreshCart();` from your Cart component's methods to refresh the cart display. 
 
 ### Custom payment providers
 
@@ -155,6 +169,7 @@ class Plugin extends PluginBase
 The easiest way to link a model to a `CartItem` is to add a simple `belongsTo` relationship.
 
 ```php
+// Voucher is the thing we are selling (the CartItem)
 class Voucher extends Model
 {
     public $belongsTo = [
