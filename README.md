@@ -88,6 +88,7 @@ Make sure the component extends MicroCart's base component.
 <?php namespace YourVendor\YourPlugin\Components;
 
 use OFFLINE\MicroCart\Models\CartItem;
+use OFFLINE\MicroCart\Classes\Payments\PaymentRedirector;
 
 class Cart extends \OFFLINE\MicroCart\Components\Cart
 {        
