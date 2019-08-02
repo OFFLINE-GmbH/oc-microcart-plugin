@@ -5,6 +5,7 @@ use OFFLINE\MicroCart\Classes\Payments\DefaultPaymentGateway;
 use OFFLINE\MicroCart\Classes\Payments\Offline;
 use OFFLINE\MicroCart\Classes\Payments\PaymentGateway;
 use OFFLINE\MicroCart\Classes\Payments\PayPalRest;
+use OFFLINE\MicroCart\Classes\Payments\SixSaferPay;
 use OFFLINE\MicroCart\Classes\Payments\Stripe;
 use OFFLINE\MicroCart\Models\GeneralSettings;
 use OFFLINE\MicroCart\Models\PaymentGatewaySettings;
@@ -25,6 +26,7 @@ class Plugin extends PluginBase
             new Offline(),
             new PayPalRest(),
             new Stripe(),
+            new SixSaferPay(),
         ];
     }
 

@@ -1,11 +1,9 @@
 <?php
 
-namespace OFFLINE\Vouchers\Classes;
+namespace OFFLINE\MicroCart\Classes\Payments;
 
 
 use October\Rain\Exception\ValidationException;
-use OFFLINE\MicroCart\Classes\Payments\PaymentProvider;
-use OFFLINE\MicroCart\Classes\Payments\PaymentResult;
 use OFFLINE\MicroCart\Models\PaymentGatewaySettings;
 use Session;
 use Throwable;
