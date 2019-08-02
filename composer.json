@@ -1,8 +1,32 @@
 {
-    "require-dev": {
-        "mockery/mockery": "^1.2"
-    },
-    "require": {
-        "ticketpark/saferpay-json-api": "^1.4"
+  "name": "offline/oc-micro-cart-plugin",
+  "type": "october-plugin",
+  "description": "Simple shopping cart for October CMS",
+  "keywords": [
+    "october",
+    "cms",
+    "e-commerce",
+    "cart",
+    "shop",
+    "plugin"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Tobias Kündig",
+      "email": "tobias@offline.ch"
     }
+  ],
+  "require-dev": {
+    "mockery/mockery": "^1.2"
+  },
+  "require": {
+    "composer/installers": "~1.0",
+    "league/omnipay": "^3"
+  },
+  "suggest": {
+    "ticketpark/saferpay-json-api": "^1.4",
+    "omnipay/paypal": "^3.0",
+    "omnipay/stripe": "^3.0"
+  }
 }

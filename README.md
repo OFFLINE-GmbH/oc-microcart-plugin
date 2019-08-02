@@ -130,6 +130,17 @@ cp -rv plugins/offline/microcart/components/cart/* plugins/yourvendor/yourplugin
 
 You can `return $this->refreshCart();` from your Cart component's methods to refresh the cart display. 
 
+### Using payment providers
+
+There are three payment providers supported out-of-the-box:
+
+* PayPal (`composer require omnipay/stripe`)
+* Stripe (`composer require omnipay/paypal`)
+* Six SaferPay (`composer require ticketpark/saferpay-json-api`)
+
+Run the composer commands beside each provider you plan to use. You can configure the
+providers via October's backend settings.
+
 ### Custom payment providers
 
 To register a custom `PaymentProvider` create a class that extends MicroCart's PaymentProvider class. [
