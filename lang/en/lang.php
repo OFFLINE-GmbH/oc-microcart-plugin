@@ -28,7 +28,7 @@
         'code_comment'           => 'This code can be used to identify this record programmatically',
         'payment_provider'       => 'Payment provider',
         'payment_gateway'        => 'Payment gateway',
-        'is_default'             => 'Ist default',
+        'is_default'             => 'Is default',
         'is_default_description' => 'Use this as default option',
         'logo'                   => 'Logo',
         'fees'                   => 'Fees',
