@@ -7,3 +7,5 @@
     - create_offline_microcart_payments_log.php
 1.0.2:
     - Stripe.js code is now put to the script placeholder by default (undo this by removing the put statement from components/cart/stripe.htm). Make sure you have placed the `{% scripts %}` tag on your layout before updating to this version.
+1.0.3:
+    - Optimized english translations
