@@ -8,68 +8,70 @@
     <input type="hidden" name="checkout[token]" value="" id="stripe-token">
 </div>
 
-<script>
-    $(function () {
+{% put scripts %}
+    <script>
+        $(function () {
 
-        if (!window.stripeLoaded) {
-            {# Lazy load stripe.js to ensure everything works when changing the payment method. #}
-            var s = document.createElement('script');
-            s.type = 'text/javascript';
-            s.src = 'https://js.stripe.com/v3/';
-            s.onload = initStripe;
+            if (!window.stripeLoaded) {
+                {# Lazy load stripe.js to ensure everything works when changing the payment method. #}
+                var s = document.createElement('script');
+                s.type = 'text/javascript';
+                s.src = 'https://js.stripe.com/v3/';
+                s.onload = initStripe;
 
-            document.head.appendChild(s)
-        } else {
-            initStripe()
-        }
-
-        function initStripe () {
-            var stripe = Stripe('{{ method.settings.stripe_publishable_key }}');
-            var elements = stripe.elements();
-            var form = document.getElementById('checkout')
-
-            var card = elements.create('card');
-            card.mount('#card-element');
-
-            card.addEventListener('change', function (event) {
-                var displayError = document.getElementById('card-errors');
-                if (event.error) {
-                    displayError.textContent = event.error.message;
-                } else {
-                    displayError.textContent = '';
-                }
-            });
-
-            form.removeEventListener('offline.microcart.checkout', checkoutHandler, true);
-            form.addEventListener('offline.microcart.checkout', checkoutHandler, true);
-
-            window.stripeLoaded = true
-
-            function checkoutHandler (event) {
-                // Tell the form submission that we're handling it via the Promise attached to the Event.
-                if (event.detail.isHandled) {
-                    return
-                }
-                event.detail.isHandled = true
-
-                var submit = form.querySelector('[type="submit"]')
-                submit.classList.add('oc-loading')
-                submit.disabled = true
-
-                stripe.createToken(card).then(function (result) {
-                    if (result.error) {
-                        var errorElement = document.getElementById('card-errors');
-                        errorElement.textContent = result.error.message;
-                        submit.classList.remove('oc-loading')
-                        event.detail.reject()
-                    } else {
-                        var input = document.getElementById('stripe-token')
-                        input.value = result.token.id
-                        event.detail.resolve()
-                    }
-                    submit.disabled = false
-                });
+                document.head.appendChild(s)
+            } else {
+                initStripe()
             }
-        }
-    });
-</script>
+
+            function initStripe () {
+                var stripe = Stripe('{{ method.settings.stripe_publishable_key }}');
+                var elements = stripe.elements();
+                var form = document.getElementById('checkout')
+
+                var card = elements.create('card');
+                card.mount('#card-element');
+
+                card.addEventListener('change', function (event) {
+                    var displayError = document.getElementById('card-errors');
+                    if (event.error) {
+                        displayError.textContent = event.error.message;
+                    } else {
+                        displayError.textContent = '';
+                    }
+                });
+
+                form.removeEventListener('offline.microcart.checkout', checkoutHandler, true);
+                form.addEventListener('offline.microcart.checkout', checkoutHandler, true);
+
+                window.stripeLoaded = true
+
+                function checkoutHandler (event) {
+                    // Tell the form submission that we're handling it via the Promise attached to the Event.
+                    if (event.detail.isHandled) {
+                        return
+                    }
+                    event.detail.isHandled = true
+
+                    var submit = form.querySelector('[type="submit"]')
+                    submit.classList.add('oc-loading')
+                    submit.disabled = true
+
+                    stripe.createToken(card).then(function (result) {
+                        if (result.error) {
+                            var errorElement = document.getElementById('card-errors');
+                            errorElement.textContent = result.error.message;
+                            submit.classList.remove('oc-loading')
+                            event.detail.reject()
+                        } else {
+                            var input = document.getElementById('stripe-token')
+                            input.value = result.token.id
+                            event.detail.resolve()
+                        }
+                        submit.disabled = false
+                    });
+                }
+            }
+        });
+    </script>
+{% endput %}
