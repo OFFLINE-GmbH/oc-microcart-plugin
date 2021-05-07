@@ -157,6 +157,8 @@ class Cart extends Model
         $this->flushCache();
 
         Event::fire('offline.microcart.cart.afterAdd', [$this, $item]);
+        
+        return true;
     }
 
     /**
