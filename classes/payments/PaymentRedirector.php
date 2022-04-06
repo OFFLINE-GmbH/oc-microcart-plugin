@@ -14,10 +14,6 @@ use OFFLINE\MicroCart\Models\Cart;
 class PaymentRedirector
 {
     /**
-     * @var Controller
-     */
-    protected $controller;
-    /**
      * @var string
      */
     protected $page;
@@ -31,8 +27,10 @@ class PaymentRedirector
      */
     public function __construct(string $page)
     {
-        $this->controller = new Controller();
-        $this->page       = $page;
+        $this->page = $page;
+        if (!starts_with($page, 'http')) {
+            $this->page = (new Controller())->pageUrl($page);
+        }
     }
 
     /**
@@ -140,7 +138,7 @@ class PaymentRedirector
     {
         return sprintf(
             '%s?%s',
-            $this->controller->pageUrl($this->page),
+            $this->page,
             http_build_query([
                 'result' => $result,
                 'cart'   => session()->pull('microCart.processing_cart.id'),

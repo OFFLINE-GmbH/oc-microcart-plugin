@@ -80,7 +80,8 @@ abstract class Cart extends ComponentBase
             array_only($data, array_keys($this->getValidationRules()))
         );
 
-        $this->cart->payment_method_id = $data['payment_method_id'];
+        // TODO: Lösung finden, wie dies schön gemacht werden kann sodass die payment_method_id vom Integrator gesetzt werden kann.
+        $this->cart->payment_method_id = array_get($data, 'payment_method_id', $this->cart->payment_method_id);
         $this->cart->save();
 
         $paymentMethod = PaymentMethod::findOrFail($this->cart->payment_method_id);
@@ -108,9 +109,9 @@ abstract class Cart extends ComponentBase
     public function onAdd()
     {
         $item           = new CartItem();
-        $item->name     = 'Your product';
+        $item->name     = 'Your product ' . random_int(10000, 99999);
         $item->quantity = random_int(1, 4);
-        $item->price    = 100.00;
+        $item->price    = random_int(10000, 99999) / 100;
 
         $this->cart->add($item);
 
