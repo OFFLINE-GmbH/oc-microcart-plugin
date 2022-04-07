@@ -80,7 +80,6 @@ abstract class Cart extends ComponentBase
             array_only($data, array_keys($this->getValidationRules()))
         );
 
-        // TODO: Lösung finden, wie dies schön gemacht werden kann sodass die payment_method_id vom Integrator gesetzt werden kann.
         $this->cart->payment_method_id = array_get($data, 'payment_method_id', $this->cart->payment_method_id);
         $this->cart->save();
 
