@@ -1,7 +1,5 @@
 # oc-microcart-plugin
 
-[![Build Status](https://travis-ci.org/OFFLINE-GmbH/oc-microcart-plugin.svg?branch=master)](https://travis-ci.org/OFFLINE-GmbH/oc-microcart-plugin)
-
 > The `OFFLINE.MicroCart` plugin aims to provide simple shopping cart and payment features.
 
 This plugin is meant for projects where simple items are sold online (Tickets, Coupons, etc).
