@@ -27,8 +27,8 @@ class Plugin extends PluginBase
             new Offline(),
             new PayPalRest(),
             new Stripe(),
-            new SixSaferPay(),
             new StripeCheckout(),
+            new SixSaferPay(),
         ];
     }
 

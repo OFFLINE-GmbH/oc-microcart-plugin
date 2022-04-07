@@ -28,7 +28,7 @@
     "ticketpark/saferpay-json-api": "^1.4",
     "omnipay/paypal": "^3.0",
     "omnipay/stripe": "^3.0",
-    "digitickets/omnipay-stripe-checkout": "~3.0"
+    "digitickets/omnipay-stripe-checkout": "^3.0"
   },
   "config": {
     "allow-plugins": {
