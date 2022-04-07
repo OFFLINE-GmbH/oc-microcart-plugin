@@ -56,7 +56,7 @@ abstract class Cart extends ComponentBase
     {
         // An off-site payment has been completed
         if ($type = request()->input('return')) {
-            return (new PaymentRedirector($this->page->page->fileName))->handleOffSiteReturn($type);
+            return (new PaymentRedirector(url()->current()))->handleOffSiteReturn($type);
         }
     }
 
