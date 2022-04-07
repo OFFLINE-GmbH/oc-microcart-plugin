@@ -28,6 +28,9 @@ class Cart extends Model
     public $belongsTo = [
         'payment_method' => PaymentMethod::class,
     ];
+    public $hasOne = [
+        'payment' => PaymentLog::class
+    ];
 
     /**
      * Cached totals of this cart.
@@ -230,6 +233,13 @@ class Cart extends Model
         $this->flushCache();
 
         Event::fire('offline.microcart.cart.afterRemove', [$this, $item]);
+    }
+
+    public function removeAll() {
+        $this->items()->delete();
+
+        $this->reloadRelations('items');
+        $this->flushCache();
     }
 
     /**

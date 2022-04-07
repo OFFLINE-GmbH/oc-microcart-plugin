@@ -56,7 +56,7 @@ abstract class Cart extends ComponentBase
     {
         // An off-site payment has been completed
         if ($type = request()->input('return')) {
-            return (new PaymentRedirector($this->page->page->fileName))->handleOffSiteReturn($type);
+            return (new PaymentRedirector(url()->current()))->handleOffSiteReturn($type);
         }
     }
 
@@ -80,7 +80,7 @@ abstract class Cart extends ComponentBase
             array_only($data, array_keys($this->getValidationRules()))
         );
 
-        $this->cart->payment_method_id = $data['payment_method_id'];
+        $this->cart->payment_method_id = array_get($data, 'payment_method_id', $this->cart->payment_method_id);
         $this->cart->save();
 
         $paymentMethod = PaymentMethod::findOrFail($this->cart->payment_method_id);
@@ -108,9 +108,9 @@ abstract class Cart extends ComponentBase
     public function onAdd()
     {
         $item           = new CartItem();
-        $item->name     = 'Your product';
+        $item->name     = 'Your product ' . random_int(10000, 99999);
         $item->quantity = random_int(1, 4);
-        $item->price    = 100.00;
+        $item->price    = random_int(10000, 99999) / 100;
 
         $this->cart->add($item);
 
