@@ -64,6 +64,7 @@ class StripeCheckout extends PaymentProvider
                 'returnUrl'         => $this->returnUrl(),
                 'cancelUrl'         => $this->cancelUrl(),
                 'transactionId'     => $this->cart->id,
+                'customerEmail'     => $this->cart->email,
                 'items'             => $items
             ]);
 
