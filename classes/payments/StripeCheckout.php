@@ -104,7 +104,8 @@ class StripeCheckout extends PaymentProvider
         }
     }
 
-    protected function getGateway() {
+    protected function getGateway()
+    {
         $gateway = Omnipay::create(CheckoutGateway::class);
         $gateway->setApiKey(decrypt(PaymentGatewaySettings::get('stripe_checkout_api_key')));
 
